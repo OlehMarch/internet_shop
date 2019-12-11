@@ -54,12 +54,14 @@ namespace internet_shop
 
             // configure DI for application services
             services.AddTransient<UserService>();
+            services.AddTransient<BrandService>();
             services.AddTransient<PromosService>();
             services.AddTransient<ProductService>();
             services.AddTransient<CategoriesService>();
 
             // configure DI for DB
             services.AddDbContext<BaseDbContext>();
+            services.AddDbContext<BrandDbContext>();
             services.AddDbContext<PromosDbContext>();
             services.AddDbContext<ProductDbContext>();
             services.AddDbContext<CategoryDbContext>();
