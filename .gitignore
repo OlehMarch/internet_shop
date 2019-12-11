@@ -243,3 +243,5 @@ internet_shop/obj/internet_shop.csproj.nuget.dgspec.json
 internet_shop/obj/internet_shop.csproj.nuget.g.props
 internet_shop/obj/internet_shop.csproj.nuget.g.targets
 internet_shop/obj/project.assets.json
+internet_shop/obj/Debug/netcoreapp3.0/internet_shop.csprojAssemblyReference.cache
+.vs/internet_shop/v16/.suo
