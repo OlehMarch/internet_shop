@@ -3,21 +3,20 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+using internet_shop.DbContexts;
 
 namespace internet_shop.Services
 {
     public class CategoriesService
     {
 
-        public CategoriesService(AppDbContext db)
+        public CategoriesService(CategoryDbContext db)
         {
             _db = db;
         }
 
-        private AppDbContext _db;
-        private DbSet<Categories> _cat => _db.Cat;
+        private CategoryDbContext _db;
+        private DbSet<Categories> _cat => _db.Categories;
 
         public List<Categories> GetAllCategory()
         {
