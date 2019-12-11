@@ -1,24 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\source\\repos\\internet_shop\\internet_shop\\internet_shop.csproj": {}
+    "C:\\Users\\Tetiana\\Documents\\GitHub\\internet_shop\\internet_shop\\internet_shop.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\source\\repos\\internet_shop\\internet_shop\\internet_shop.csproj": {
+    "C:\\Users\\Tetiana\\Documents\\GitHub\\internet_shop\\internet_shop\\internet_shop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\source\\repos\\internet_shop\\internet_shop\\internet_shop.csproj",
+        "projectUniqueName": "C:\\Users\\Tetiana\\Documents\\GitHub\\internet_shop\\internet_shop\\internet_shop.csproj",
         "projectName": "internet_shop",
-        "projectPath": "C:\\Users\\user\\source\\repos\\internet_shop\\internet_shop\\internet_shop.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\source\\repos\\internet_shop\\internet_shop\\obj\\",
+        "projectPath": "C:\\Users\\Tetiana\\Documents\\GitHub\\internet_shop\\internet_shop\\internet_shop.csproj",
+        "packagesPath": "C:\\Users\\Tetiana\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Tetiana\\Documents\\GitHub\\internet_shop\\internet_shop\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Tetiana\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
@@ -40,6 +42,34 @@
       },
       "frameworks": {
         "netcoreapp3.0": {
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
