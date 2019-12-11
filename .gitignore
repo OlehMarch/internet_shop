@@ -1,14 +1,14 @@
 ###################
 # compiled source #
 ###################
-*.com
-*.class
-*.dll
-*.exe
-*.pdb
-*.dll.config
-*.cache
-*.suo
+*/*.com
+*/*.class
+*/*.dll
+*/*.exe
+*/*.pdb
+*/*.dll.config
+*/*.cache
+*/*.suo
 # Include dlls if they’re in the NuGet packages directory
 !/packages/*/lib/*.dll
 !/packages/*/lib/*/*.dll
@@ -22,8 +22,8 @@ _UpgradeReport_Files/
 ###############
 # Directories #
 ###############
-bin/*.*
-obj/*.*
+*/bin/*.*
+*/obj/*.*
 TestResults/
 ###################
 # Web publish log #
@@ -61,29 +61,16 @@ Thumbs.db
 [Bb]in
 [Oo]bj
 [Tt]est[Rr]esults
-*.suo
-*.user
+*/*.suo
+*/*.user
 *.[Cc]ache
 *[Rr]esharper*
-packages
+*/packages
 NuGet.exe
 _[Ss]cripts
-*.exe
-*.dll
-*.nupkg
-*.ncrunchsolution
-*.dot[Cc]over
-.vs/internet_shop/v16/Server/sqlite3/storage.ide
-.vs/internet_shop/v16/Server/sqlite3/storage.ide-shm
-.vs/internet_shop/v16/Server/sqlite3/storage.ide-wal
-*.ide-shm
-*.dll
-.vs/internet_shop/v16/Server/sqlite3/storage.ide-shm
-.vs/internet_shop/v16/Server/sqlite3/storage.ide-wal
-internet_shop/obj/Debug/netcoreapp3.0/internet_shop.csprojAssemblyReference.cache
-*.ide-shm
-*.ide-wal
-.vs/internet_shop/v16/TestStore/0/000-0000.testlog
-.vs/internet_shop/v16/TestStore/0/testlog.manifest
-.vs/internet_shop/v16/Server/sqlite3/storage.ide-wal
-.vs/internet_shop/v16/Server/sqlite3/storage.ide-shm
+*/*.exe
+*/*.dll
+*/*.nupkg
+*/*.ncrunchsolution
+*/*.dot[Cc]over
+*/.vs
