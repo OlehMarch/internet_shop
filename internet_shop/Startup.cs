@@ -1,8 +1,9 @@
-using internet_shop.Services;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using internet_shop.Helpers;
+using internet_shop.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -19,11 +20,10 @@ namespace internet_shop
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add 
-        // services to the container.
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddControllersWithViews();
+            services.AddCors();
             services.AddControllers();
 
             // configure strongly typed settings objects
@@ -53,23 +53,27 @@ namespace internet_shop
 
             // configure DI for application services
             services.AddTransient<UserService>();
-            services.AddTransient<PromosService>();
             services.AddTransient<CategoriesService>();
 
-            // configure DI for DB
             services.AddDbContext<BaseDbContext>();
-            services.AddDbContext<PromoDbContext>();
             services.AddDbContext<CategoryDbContext>();
         }
 
-        // This method gets called by the runtime. Use this method to configure 
-        // the HTTP request pipeline.
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
             });
         }
