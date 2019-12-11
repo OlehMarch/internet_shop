@@ -27,7 +27,7 @@ namespace internet_shop.Controllers
         }
 
         // GET: api/Brand/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
 
         public IActionResult Get(int id)
         {

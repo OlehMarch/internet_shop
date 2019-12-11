@@ -20,7 +20,7 @@ namespace internet_shop.Controllers
         //    return View();
         //}
 
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             var product = _productService.GetProduct(id);

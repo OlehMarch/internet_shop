@@ -5,28 +5,29 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 using internet_shop.Models;
+using internet_shop.DbContexts;
 
 namespace internet_shop.Services
 {
     public class CategoriesService
     {
 
-        public CategoriesService(BaseDbContext db)
+        public CategoriesService(CategoryDbContext db)
         {
             _db = db;
         }
 
-        private BaseDbContext _db;
-        private DbSet<Categories> _cat => _db.Cat;
+        private readonly CategoryDbContext _db;
+        private DbSet<Categories> Cat => _db.Categories;
 
         public List<Categories> GetAllCategory()
         {
-            return _cat.ToList();
+            return Cat.ToList();
         }
 
         public Categories GetCategoryById(int id)
         {
-            var cat = _cat.SingleOrDefault((Categories cat) => cat.Id == id);
+            var cat = Cat.SingleOrDefault((Categories cat) => cat.Id == id);
             if (cat == null)
             {
                 return null;
@@ -35,7 +36,7 @@ namespace internet_shop.Services
         }
         public bool DeleteCategoryById(int id)
         {
-            Categories cat = _cat.SingleOrDefault((Categories cat) => cat.Id == id);
+            Categories cat = Cat.SingleOrDefault((Categories cat) => cat.Id == id);
 
             if (cat == null)
             {
@@ -55,7 +56,7 @@ namespace internet_shop.Services
         public bool AddCategories(string name, int value)
         {
             Categories cat = ToEntity(name, value);
-            _cat.Add(cat);
+            Cat.Add(cat);
             try
             {
                 _db.SaveChanges();

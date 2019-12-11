@@ -28,7 +28,7 @@ namespace internet_shop.Controllers
 
 
         //// GET: api/Promos/5
-        //[HttpGet("{id}", Name = "Get")]
+        //[HttpGet("{id}")]
         //public IActionResult GetById(int id)
         //{
         //    Order order = orderService.GetOrderById(id);
