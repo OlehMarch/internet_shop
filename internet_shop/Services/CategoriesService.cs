@@ -1,22 +1,22 @@
-﻿using internet_shop.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Collections.Generic;
+
+using Microsoft.EntityFrameworkCore;
+
+using internet_shop.Models;
 
 namespace internet_shop.Services
 {
     public class CategoriesService
     {
 
-        public CategoriesService(AppDbContext db)
+        public CategoriesService(BaseDbContext db)
         {
             _db = db;
         }
 
-        private AppDbContext _db;
+        private BaseDbContext _db;
         private DbSet<Categories> _cat => _db.Cat;
 
         public List<Categories> GetAllCategory()

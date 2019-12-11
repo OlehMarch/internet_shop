@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using System.Collections.Generic;
+
 using internet_shop.Entities;
 
 namespace internet_shop.Helpers

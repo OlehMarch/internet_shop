@@ -1,12 +1,10 @@
-﻿using internet_shop.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace internet_shop
 {
-    public class AppDbContext : DbContext
+    public class BaseDbContext : DbContext
     {
-        public AppDbContext()
+        public BaseDbContext()
         {
             //Database.EnsureCreated();
         }
@@ -21,6 +19,5 @@ namespace internet_shop
                 $"server={dbHost};UserId={dbUser};database={dbName};"
                 );
         }
-        public DbSet<Categories> Cat { get; set; }
     }
 }

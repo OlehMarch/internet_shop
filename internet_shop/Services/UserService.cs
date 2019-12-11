@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Linq;
+using System.Text;
+using System.Security.Claims;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
+
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using internet_shop.Entities;
+
 using internet_shop.Helpers;
+using internet_shop.Entities;
 
 namespace internet_shop.Services
 {

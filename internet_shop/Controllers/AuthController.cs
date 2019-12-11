@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using internet_shop.Services;
+
 using internet_shop.Models;
-using System.Linq;
+using internet_shop.Services;
 
 namespace internet_shop.Controllers
 {

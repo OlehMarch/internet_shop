@@ -27,7 +27,7 @@ namespace internet_shop.Controllers
         }
 
         // GET: api/Cat/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public Categories Get(int id)
         {
             var cat = _catService.GetCategoryById(id);
