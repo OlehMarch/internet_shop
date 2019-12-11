@@ -1,14 +1,14 @@
 ###################
 # compiled source #
 ###################
-*/*.com
-*/*.class
-*/*.dll
-*/*.exe
-*/*.pdb
-*/*.dll.config
-*/*.cache
-*/*.suo
+*.com
+*.class
+*.dll
+*.exe
+*.pdb
+*.dll.config
+*.cache
+*.suo
 # Include dlls if they’re in the NuGet packages directory
 !/packages/*/lib/*.dll
 !/packages/*/lib/*/*.dll
@@ -22,8 +22,8 @@ _UpgradeReport_Files/
 ###############
 # Directories #
 ###############
-*/bin/*.*
-*/obj/*.*
+bin/*.*
+obj/*.*
 TestResults/
 ###################
 # Web publish log #
@@ -61,19 +61,24 @@ Thumbs.db
 [Bb]in
 [Oo]bj
 [Tt]est[Rr]esults
-*/*.suo
-*/*.user
+*.suo
+*.user
 *.[Cc]ache
 *[Rr]esharper*
-*/packages
+packages
 NuGet.exe
 _[Ss]cripts
-*/*.exe
-*/*.dll
-*/*.nupkg
-*/*.ncrunchsolution
-*/*.dot[Cc]over
-*/.vs
+*.exe
+*.dll
+*.nupkg
+*.ncrunchsolution
+*.dot[Cc]over
+.vs/internet_shop/v16/.suo
+.vs/internet_shop/v16/Server/sqlite3/storage.ide-shm
+.vs/internet_shop/v16/Server/sqlite3/storage.ide-wal
+internet_shop/obj/Debug/netcoreapp3.0/internet_shop.AssemblyInfo.cs
+internet_shop/obj/Debug/netcoreapp3.0/internet_shop.assets.cache
+internet_shop/obj/Debug/netcoreapp3.0/internet_shop.csprojAssemblyReference.cache
 internet_shop/bin/Debug/netcoreapp3.0/appsettings.Development.json
 internet_shop/bin/Debug/netcoreapp3.0/appsettings.json
 internet_shop/bin/Debug/netcoreapp3.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll
@@ -114,6 +119,7 @@ internet_shop/bin/Debug/netcoreapp3.0/ko/Microsoft.CodeAnalysis.CSharp.resources
 internet_shop/bin/Debug/netcoreapp3.0/ko/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
 internet_shop/bin/Debug/netcoreapp3.0/ko/Microsoft.CodeAnalysis.resources.dll
 internet_shop/bin/Debug/netcoreapp3.0/ko/Microsoft.CodeAnalysis.Workspaces.resources.dll
+internet_shop/bin/Debug/netcoreapp3.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 internet_shop/bin/Debug/netcoreapp3.0/Microsoft.AspNetCore.Razor.Language.dll
 internet_shop/bin/Debug/netcoreapp3.0/Microsoft.Bcl.AsyncInterfaces.dll
 internet_shop/bin/Debug/netcoreapp3.0/Microsoft.Bcl.HashCode.dll
@@ -141,6 +147,11 @@ internet_shop/bin/Debug/netcoreapp3.0/Microsoft.Extensions.Logging.dll
 internet_shop/bin/Debug/netcoreapp3.0/Microsoft.Extensions.Options.dll
 internet_shop/bin/Debug/netcoreapp3.0/Microsoft.Extensions.Primitives.dll
 internet_shop/bin/Debug/netcoreapp3.0/Microsoft.Identity.Client.dll
+internet_shop/bin/Debug/netcoreapp3.0/Microsoft.IdentityModel.JsonWebTokens.dll
+internet_shop/bin/Debug/netcoreapp3.0/Microsoft.IdentityModel.Logging.dll
+internet_shop/bin/Debug/netcoreapp3.0/Microsoft.IdentityModel.Protocols.dll
+internet_shop/bin/Debug/netcoreapp3.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+internet_shop/bin/Debug/netcoreapp3.0/Microsoft.IdentityModel.Tokens.dll
 internet_shop/bin/Debug/netcoreapp3.0/Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll
 internet_shop/bin/Debug/netcoreapp3.0/Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
 internet_shop/bin/Debug/netcoreapp3.0/Microsoft.VisualStudio.Web.CodeGeneration.dll
@@ -183,6 +194,7 @@ internet_shop/bin/Debug/netcoreapp3.0/System.Composition.Runtime.dll
 internet_shop/bin/Debug/netcoreapp3.0/System.Composition.TypedParts.dll
 internet_shop/bin/Debug/netcoreapp3.0/System.Configuration.ConfigurationManager.dll
 internet_shop/bin/Debug/netcoreapp3.0/System.Diagnostics.DiagnosticSource.dll
+internet_shop/bin/Debug/netcoreapp3.0/System.IdentityModel.Tokens.Jwt.dll
 internet_shop/bin/Debug/netcoreapp3.0/System.Runtime.Caching.dll
 internet_shop/bin/Debug/netcoreapp3.0/System.Runtime.CompilerServices.Unsafe.dll
 internet_shop/bin/Debug/netcoreapp3.0/System.Security.Cryptography.ProtectedData.dll
@@ -199,15 +211,14 @@ internet_shop/bin/Debug/netcoreapp3.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.Work
 internet_shop/bin/Debug/netcoreapp3.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll
 internet_shop/bin/Debug/netcoreapp3.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
 internet_shop/obj/Debug/netcoreapp3.0/internet_shop.AssemblyInfo.cs
-internet_shop/obj/Debug/netcoreapp3.0/internet_shop.AssemblyInfoInputs.cache
 internet_shop/obj/Debug/netcoreapp3.0/internet_shop.assets.cache
 internet_shop/obj/Debug/netcoreapp3.0/internet_shop.csproj.CopyComplete
+internet_shop/obj/Debug/netcoreapp3.0/internet_shop.csproj.FileListAbsolute.txt
 internet_shop/obj/Debug/netcoreapp3.0/internet_shop.csprojAssemblyReference.cache
 internet_shop/obj/Debug/netcoreapp3.0/internet_shop.dll
 internet_shop/obj/Debug/netcoreapp3.0/internet_shop.exe
 internet_shop/obj/Debug/netcoreapp3.0/internet_shop.MvcApplicationPartsAssemblyInfo.cache
 internet_shop/obj/Debug/netcoreapp3.0/internet_shop.pdb
-internet_shop/obj/Debug/netcoreapp3.0/internet_shop.RazorAssemblyInfo.cache
 internet_shop/obj/Debug/netcoreapp3.0/internet_shop.RazorAssemblyInfo.cs
 internet_shop/obj/Debug/netcoreapp3.0/internet_shop.RazorCoreGenerate.cache
 internet_shop/obj/Debug/netcoreapp3.0/internet_shop.RazorTargetAssemblyInfo.cache
@@ -219,6 +230,7 @@ internet_shop/obj/Debug/netcoreapp3.0/internet_shop.Views.pdb
 internet_shop/obj/Debug/netcoreapp3.0/project.razor.json
 internet_shop/obj/Debug/netcoreapp3.0/Razor/Views/_ViewImports.cshtml.g.cs
 internet_shop/obj/Debug/netcoreapp3.0/Razor/Views/_ViewStart.cshtml.g.cs
+internet_shop/obj/Debug/netcoreapp3.0/Razor/Views/Catogories/Index.cshtml.g.cs
 internet_shop/obj/Debug/netcoreapp3.0/Razor/Views/Home/Index.cshtml.g.cs
 internet_shop/obj/Debug/netcoreapp3.0/Razor/Views/Home/Privacy.cshtml.g.cs
 internet_shop/obj/Debug/netcoreapp3.0/Razor/Views/Shared/_Layout.cshtml.g.cs
@@ -231,6 +243,5 @@ internet_shop/obj/internet_shop.csproj.nuget.dgspec.json
 internet_shop/obj/internet_shop.csproj.nuget.g.props
 internet_shop/obj/internet_shop.csproj.nuget.g.targets
 internet_shop/obj/project.assets.json
-.vs/internet_shop/v16/Server/sqlite3/storage.ide-wal
-.vs/internet_shop/v16/Server/sqlite3/storage.ide-shm
-.vs/internet_shop/v16/Server/sqlite3/storage.ide
+internet_shop/obj/Debug/netcoreapp3.0/internet_shop.csprojAssemblyReference.cache
+.vs/internet_shop/v16/.suo
