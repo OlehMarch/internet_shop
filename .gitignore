@@ -83,3 +83,7 @@ _[Ss]cripts
 internet_shop/obj/Debug/netcoreapp3.0/internet_shop.csprojAssemblyReference.cache
 *.ide-shm
 *.ide-wal
+.vs/internet_shop/v16/TestStore/0/000-0000.testlog
+.vs/internet_shop/v16/TestStore/0/testlog.manifest
+.vs/internet_shop/v16/Server/sqlite3/storage.ide-wal
+.vs/internet_shop/v16/Server/sqlite3/storage.ide-shm
