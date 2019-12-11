@@ -76,3 +76,10 @@ _[Ss]cripts
 .vs/internet_shop/v16/Server/sqlite3/storage.ide
 .vs/internet_shop/v16/Server/sqlite3/storage.ide-shm
 .vs/internet_shop/v16/Server/sqlite3/storage.ide-wal
+*.ide-shm
+*.dll
+.vs/internet_shop/v16/Server/sqlite3/storage.ide-shm
+.vs/internet_shop/v16/Server/sqlite3/storage.ide-wal
+internet_shop/obj/Debug/netcoreapp3.0/internet_shop.csprojAssemblyReference.cache
+*.ide-shm
+*.ide-wal
