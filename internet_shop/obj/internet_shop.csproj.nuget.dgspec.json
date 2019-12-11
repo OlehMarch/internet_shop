@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Oleksandr\\Desktop\\internet_shop_categories\\internet_shop_categories\\internet_shop\\internet_shop.csproj": {}
+    "C:\\Repository\\internet_shop\\internet_shop\\internet_shop.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Oleksandr\\Desktop\\internet_shop_categories\\internet_shop_categories\\internet_shop\\internet_shop.csproj": {
+    "C:\\Repository\\internet_shop\\internet_shop\\internet_shop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Oleksandr\\Desktop\\internet_shop_categories\\internet_shop_categories\\internet_shop\\internet_shop.csproj",
+        "projectUniqueName": "C:\\Repository\\internet_shop\\internet_shop\\internet_shop.csproj",
         "projectName": "internet_shop",
-        "projectPath": "C:\\Users\\Oleksandr\\Desktop\\internet_shop_categories\\internet_shop_categories\\internet_shop\\internet_shop.csproj",
-        "packagesPath": "C:\\Users\\Oleksandr\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Oleksandr\\Desktop\\internet_shop_categories\\internet_shop_categories\\internet_shop\\obj\\",
+        "projectPath": "C:\\Repository\\internet_shop\\internet_shop\\internet_shop.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\Repository\\internet_shop\\internet_shop\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Oleksandr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
