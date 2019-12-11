@@ -1,23 +1,23 @@
-﻿using Internet_shop.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Internet_shop.Services
+namespace internet_shop
 {
-    public class BaseDbContext:DbContext
+    public class BaseDbContext : DbContext
     {
+        public BaseDbContext()
+        {
+            Database.EnsureCreated();
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string dbName = "product_ishop";
+            string dbName = "internet_shop";
             string dbUser = "root";
             string dbHost = "localhost";
 
             optionsBuilder.UseMySql(
                 $"server={dbHost};UserId={dbUser};database={dbName};"
-                );
+            );
         }
     }
 }
