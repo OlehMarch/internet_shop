@@ -1,9 +1,10 @@
-﻿using internet_shop;
-using Internet_shop.Models;
+﻿using System.Linq;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace Internet_shop.Services
+using internet_shop.Models;
+using internet_shop.DbContexts;
+
+namespace internet_shop.Services
 {
     public class ProductService
     {
@@ -35,7 +36,7 @@ namespace Internet_shop.Services
             using (ProductDbContext db = new ProductDbContext())
             {
                 var products = db.Products.Find(id);
-                if(products == null)
+                if (products == null)
                     return false;
                 else
                 {
@@ -43,14 +44,15 @@ namespace Internet_shop.Services
                     db.SaveChanges();
                     return true;
                 }
-                
+
             }
         }
+        
         public Product GetProduct(int id)
         {
             using (ProductDbContext db = new ProductDbContext())
             {
-                if(db.Products.Find(id) == null)
+                if (db.Products.Find(id) == null)
                 {
                     return null;
                 }

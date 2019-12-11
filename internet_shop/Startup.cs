@@ -1,12 +1,13 @@
+using System.Text;
+
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 using internet_shop.Helpers;
 using internet_shop.Services;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using internet_shop.DbContexts;
 
 namespace internet_shop
@@ -53,9 +54,14 @@ namespace internet_shop
 
             // configure DI for application services
             services.AddTransient<UserService>();
+            services.AddTransient<PromosService>();
+            services.AddTransient<ProductService>();
             services.AddTransient<CategoriesService>();
 
+            // configure DI for DB
             services.AddDbContext<BaseDbContext>();
+            services.AddDbContext<PromosDbContext>();
+            services.AddDbContext<ProductDbContext>();
             services.AddDbContext<CategoryDbContext>();
         }
 

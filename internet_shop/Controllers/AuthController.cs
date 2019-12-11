@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using internet_shop.Services;
+
 using internet_shop.Models;
-using System.Linq;
+using internet_shop.Services;
 
 namespace internet_shop.Controllers
 {
@@ -11,12 +11,12 @@ namespace internet_shop.Controllers
     [Route("[controller]")]
     public class AuthController : ControllerBase
     {
-        private UserService _userService;
-
         public AuthController(UserService userService)
         {
             _userService = userService;
         }
+
+        private readonly UserService _userService;
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
@@ -29,7 +29,5 @@ namespace internet_shop.Controllers
 
             return Ok(user);
         }
-
-
     }
 }

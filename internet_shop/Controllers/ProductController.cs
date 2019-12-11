@@ -1,23 +1,26 @@
-﻿using Internet_shop.Services;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Internet_shop.Controllers
+using internet_shop.Services;
+
+namespace internet_shop.Controllers
 {
     [Route("[controller]")]
     public class ProductController : Controller
     {
-        private ProductService _productService;
         public ProductController(ProductService productService)
         {
             _productService = productService;
         }
-        // GET: Product
-        public ActionResult Index()
-        {
-            return View();
-        }
 
-        [HttpGet("{id}")]
+        private readonly ProductService _productService;
+
+        // GET: Product
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
+
+        [HttpGet("{id}", Name = "Get")]
         public IActionResult GetById(int id)
         {
             var product = _productService.GetProduct(id);
@@ -50,7 +53,7 @@ namespace Internet_shop.Controllers
         [HttpPost("/add")]
         public IActionResult AddById([FromQuery] string name, [FromQuery] string description, [FromQuery] int price)
         {
-            var product = _productService.AddNewProduct(name,description,price);
+            var product = _productService.AddNewProduct(name, description, price);
             if (product == false)
                 return NotFound("Bad Request");
             else

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
+
 using Microsoft.AspNetCore.Mvc;
-using internet_shop.Services;
+
 using internet_shop.Models;
+using internet_shop.Services;
 
 namespace internet_shop.Controllers
 {
@@ -13,11 +11,13 @@ namespace internet_shop.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private CategoriesService _catService;
         public CategoriesController(CategoriesService catService)
         {
             _catService = catService;
         }
+
+        private readonly CategoriesService _catService;
+
         // GET: api/Cat
         [HttpGet]
         public List<Categories> Get()

@@ -1,7 +1,8 @@
-﻿using Internet_shop.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace internet_shop
+using internet_shop.Models;
+
+namespace internet_shop.DbContexts
 {
     public class ProductDbContext : BaseDbContext
     {

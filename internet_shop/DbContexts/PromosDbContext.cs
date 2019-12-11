@@ -4,8 +4,8 @@ using internet_shop.Models;
 
 namespace internet_shop.DbContexts
 {
-    public class CategoryDbContext : DbContext
+    public class PromosDbContext : BaseDbContext
     {
-        public DbSet<Categories> Categories { get; set; }
+        public DbSet<Promos> Promos { get; set; }
     }
 }
