@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Internet_shop.Models;
-using Internet_shop.Services;
-using Microsoft.AspNetCore.Http;
+﻿using Internet_shop.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Internet_shop.Controllers
@@ -23,7 +17,7 @@ namespace Internet_shop.Controllers
             return View();
         }
 
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             var product = _productService.GetProduct(id);
