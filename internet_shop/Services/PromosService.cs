@@ -3,19 +3,19 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using internet_shop.DbContexts;
 
 namespace internet_shop.Services
 {
     public class PromosService
     {
-        public PromosService(AppDbContext db)
+        public PromosService(PromoDbContext db)
         {
             _db = db;
         }
 
-        private AppDbContext _db;
+        private PromoDbContext _db;
         private DbSet<Promos> _promos => _db.Promos;
 
         public List<Promos> GetAllPromos()

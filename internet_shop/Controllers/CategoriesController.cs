@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using internet_shop.Services;
 using internet_shop.Models;
@@ -27,7 +23,7 @@ namespace internet_shop.Controllers
         }
 
         // GET: api/Cat/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public Categories Get(int id)
         {
             var cat = _catService.GetCategoryById(id);

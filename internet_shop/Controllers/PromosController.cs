@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using internet_shop.Models;
 using internet_shop.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace internet_shop.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class PromosController : Controller
     {
@@ -27,7 +23,7 @@ namespace internet_shop.Controllers
         }
 
         // GET: api/Promos/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
 
         public IActionResult Get(int id)
         {
