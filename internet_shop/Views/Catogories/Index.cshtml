@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Store.master.cs" Inherits="GameStore.Pages.Store" %>
+<%@ Register TagPrefix="GS" TagName="CategoryLinks" Src="~/Controls/CategoryList.ascx" %>
+
+
+
+<html xmlns="http://www.internet_shop">
+<head id="Head1" runat="server">
+    <title>Store</title>
+    <link rel="stylesheet" href="~/css/style.css" />
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <div id="header">
+                <div class="title">GameStore - магазин компьютерных игр</div>
+            </div>
+            <div id="categories">
+                <GS:CategoryLinks runat="server" />
+            </div>
+            <div>
+                <asp:ContentPlaceHolder ID="bodyContent" runat="server" />
+            </div>
+        </div>
+    </form>
+</body>
+</html>
