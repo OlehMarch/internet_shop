@@ -1,14 +1,13 @@
 ﻿using internet_shop.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace internet_shop
 {
-    public class AppDbContext : DbContext
+    public class BaseDbContext : DbContext
     {
-        public AppDbContext()
+        public BaseDbContext()
         {
-            //Database.EnsureCreated();
+            Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -19,8 +18,7 @@ namespace internet_shop
 
             optionsBuilder.UseMySql(
                 $"server={dbHost};UserId={dbUser};database={dbName};"
-                );
+            );
         }
-        public DbSet<Categories> Cat { get; set; }
     }
 }
