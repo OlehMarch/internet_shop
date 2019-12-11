@@ -1,7 +1,6 @@
 using System.Text;
 
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,10 +54,12 @@ namespace internet_shop
 
             // configure DI for application services
             services.AddTransient<UserService>();
+            services.AddTransient<PromosService>();
             services.AddTransient<CategoriesService>();
 
             // configure DI for DB
             services.AddDbContext<BaseDbContext>();
+            services.AddDbContext<PromosDbContext>();
             services.AddDbContext<CategoryDbContext>();
         }
 
