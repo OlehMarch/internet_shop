@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Internet_shop.Services
 {
-    public class AppDbContext:DbContext
+    public class BaseDbContext:DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -19,6 +19,5 @@ namespace Internet_shop.Services
                 $"server={dbHost};UserId={dbUser};database={dbName};"
                 );
         }
-        public DbSet<Product> Product { get; set; }
     }
 }

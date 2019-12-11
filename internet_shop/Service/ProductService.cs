@@ -1,4 +1,5 @@
-﻿using Internet_shop.Models;
+﻿using internet_shop;
+using Internet_shop.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,9 @@ namespace Internet_shop.Services
 {
     public class ProductService
     {
-        DbSet<Product> Product;
         public bool AddNewProduct(string name, string description, int price)
         {
-            using (ProductContext db = new ProductContext())
+            using (ProductDbContext db = new ProductDbContext())
             {
                 var product = ToEntity(name, description, price);
                 if (product == null)
@@ -27,7 +27,7 @@ namespace Internet_shop.Services
         }
         public List<Product> GetAll()
         {
-            using (ProductContext db = new ProductContext())
+            using (ProductDbContext db = new ProductDbContext())
             {
                 return db.Product.ToList();
             }
@@ -35,7 +35,7 @@ namespace Internet_shop.Services
 
         public bool Remove(int id)
         {
-            using (ProductContext db = new ProductContext())
+            using (ProductDbContext db = new ProductDbContext())
             {
                 var products = db.Product.Find(id);
                 if(products == null)
@@ -51,7 +51,7 @@ namespace Internet_shop.Services
         }
         public Product GetProduct(int id)
         {
-            using (ProductContext db = new ProductContext())
+            using (ProductDbContext db = new ProductDbContext())
             {
                 if(db.Product.Find(id) == null)
                 {
