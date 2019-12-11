@@ -1,0 +1,133 @@
+# # Ігнорувати тимчасові файли Visual Studio, збирати результати та
+# # файлів, створених популярними додатками Visual Studio.
+
+# Файли, призначені для користувача
+* .suo
+* .користувач
+* .sln.docstates
+
+# Створення результатів
+
+[ Dd ] ebug /
+[ Rr ] елеас /
+x64 /
+[ Bb ] в /
+[ Oo ] bj /
+
+# MSTest результати тесту
+[ Tt ] est [ Rr ] esult * /
+[ Bb ] uild [ Ll ] ог. *
+
+* _i.c
+* _p.c
+* _i.h
+* .ilk
+* .meta
+* .obj
+* .pch
+* .pdb
+* .pgc
+* .pgd
+* .rsp
+* .sbr
+* .tlb
+* .tli
+* .tlh
+* .tmp
+* .tmp_proj
+* .log
+* .vspscc
+* .vssscc
+.будівлі
+* .pidb
+* .log
+* .svclog
+* .cc
+
+# Візуальні файли кешу C ++
+ipch /
+* .aps
+* .ncb
+* .opensdf
+* .sdf
+* .cachefile
+
+# Профілер Visual Studio
+* .psess
+* .vsp
+* .vspx
+
+# Інструментарій автоматизації керівництва
+* .gpState
+
+# ReSharper - це надбудова для кодування .NET
+_ReSharper * /
+* . [ Rr ] e [ Ss ] harper
+* .DotSettings.user
+
+# Каталог один раз
+опублікувати /
+
+# Опублікувати веб-вихід
+* .Publish.xml
+* .pubxml
+* .azurePubxml
+
+# Каталог пакунків NuGet
+# # TODO: Якщо у вас включено відновлення пакунків NuGet, відмініть коментар до наступного рядка
+пакети /
+# # TODO: Якщо інструмент, який ви використовуєте, вимагає repositories.config, також скаментуйте наступний рядок
+! пакети / репозиторії.config
+
+# Вихідні дані збірки Windows Azure
+csx /
+* .build.csdef
+
+# Каталог пакетів додатків Windows Store
+Додатки /
+
+# Інші
+sql /
+*. Кеш
+ClientBin /
+[ Ss ] tyle [ Cc ] оп. *
+! [ Ss ] tyle [ Cc ] op.targets
+~ $ *
+* ~
+* .dbmdl
+* . [ Pp ] ublish.xml
+
+* .publishsettings
+
+# RIA / Silverlight проекти
+Створений_код /
+
+# Архів резервних копій та звітів від перетворення старого файлу проекту в новий
+# Версія Visual Studio Файли резервного копіювання не потрібні, оскільки у нас є git ;-)
+_UpgradeReport_Files /
+Резервне копіювання * /
+UpgradeLog * .XML
+UpgradeLog * .htm
+
+# Файли SQL Server
+App_Data / * .mdf
+App_Data / * .ldf
+
+# ==========================
+# Windows детрит
+# ==========================
+
+# Кеші файлів зображень Windows
+Thumbs.db
+ehthumbs.db
+
+# Конфігураційний файл папки
+Desktop.ini
+
+# Кошик, який використовується у файлах спільного доступу
+$ RECYCLE.BIN /
+
+# Магазини файлів служби настільних ПК Mac
+.DS_Store
+
+_NCrunch *
