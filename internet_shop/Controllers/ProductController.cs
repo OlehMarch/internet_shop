@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 using internet_shop.Services;
+using internet_shop.Models;
+using System;
 
 namespace internet_shop.Controllers
 {
@@ -20,7 +22,7 @@ namespace internet_shop.Controllers
         //    return View();
         //}
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}")]//Product/1
         public IActionResult GetById(int id)
         {
             var product = _productService.GetProduct(id);
@@ -30,7 +32,7 @@ namespace internet_shop.Controllers
                 return Ok(product);
         }
 
-        [HttpGet]
+        [HttpGet]//Product/
         public IActionResult GetAll()
         {
             var product = _productService.GetAll();
@@ -50,10 +52,21 @@ namespace internet_shop.Controllers
                 return NotFound("Fault");
         }
 
-        [HttpPost("/add")]
-        public IActionResult AddById([FromQuery] string name, [FromQuery] string description, [FromQuery] int price)
+        [HttpPut]
+        public IActionResult UpdateProductToPromos()
         {
-            var product = _productService.AddNewProduct(name, description, price);
+            var product = _productService.UpdateProduct();
+            if (product == false)
+                return BadRequest("400");
+            else
+                return Ok("200");
+
+        }
+
+        [HttpPost("/add")]//add?Name=Greta&&Description=SD
+        public IActionResult AddById([FromBody] Product value)
+        {
+            var product = _productService.AddNewProduct(value.Name, value.Description, value.BrandId,value.CategoryId,value.Price, value.Price);
             if (product == false)
                 return NotFound("Bad Request");
             else

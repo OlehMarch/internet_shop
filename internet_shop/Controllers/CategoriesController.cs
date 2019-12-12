@@ -23,22 +23,29 @@ namespace internet_shop.Controllers
         public List<Categories> Get()
         {
             return _catService.GetAllCategory();
-            
+
         }
 
         // GET: api/Cat/5
         [HttpGet("{id}")]
-        public Categories Get(int id)
+        public Categories GetById(int id)
         {
             var cat = _catService.GetCategoryById(id);
             return cat;
+        }
+
+        [HttpGet("/allCategory")]
+        public List<Product> GetAllProductByCategory([FromBody] Product product)
+        {
+            var products = _catService.GetProductsByCategory(product.CategoryId);
+                return products;
         }
 
         // POST: api/Cat
         [HttpPost]
         public IActionResult AddNewCategory([FromBody] Categories categories)
         {
-            var category = _catService.AddCategories(categories.Name,categories.Value);
+            var category = _catService.AddCategories(categories.Name);
             if (category == false)
                 return BadRequest("Bad request");
             else

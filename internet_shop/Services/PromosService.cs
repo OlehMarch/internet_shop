@@ -22,7 +22,7 @@ namespace internet_shop.Services
 
         public List<Promos> GetAllPromos()
         {
-            return Promos.ToList();
+             return Promos.ToList();
         }
 
         public Promos GetPromoById(int id)
@@ -56,27 +56,40 @@ namespace internet_shop.Services
 
             return (result.State == EntityState.Deleted, null);
         }
-        public Promos AddPromo(string name, int value)
+        public Promos AddPromo(string name, int value, int categoryId, int brandId,int productId,bool isEnabled)
         {
-            Promos promo = ToEntity(name, value);
-            Promos.Add(promo);
-            try
-            {
-                _db.SaveChanges();
-            }
-            catch
-            {
-                return null;
-            }
+                var promos = ToEntity(name, value, categoryId, brandId, productId, isEnabled);
+                if (promos == null)
+                    return null;
+                else
+                {
+                    Promos.Add(promos);
+                    _db.SaveChanges();
+                    return promos;
+                }
+            //Promos promo = ToEntity(name, value, categoryId, brandId, productId, isEnabled);
+            //Promos.Add(promo);
+            //try
+            //{
+            //    _db.SaveChanges();
+            //}
+            //catch
+            //{
+            //    return null;
+            //}
 
-            return promo;
+            //return promo;
         }
-        public Promos ToEntity(string name, int value)
+        public Promos ToEntity(string name, int value,int categoryId, int brandId, int productId, bool isEnabled)
         {
             return new Promos
             {
                 Name = name,
                 Value = value,
+                CategoryId = categoryId,
+                BrandId = brandId,
+                ProductId = productId,
+                IsEnabled = isEnabled
             };
         }
         public (Promos promos, Exception exception) Updatepromos(Promos _promos)

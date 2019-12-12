@@ -43,14 +43,14 @@ namespace internet_shop.Controllers
         }
 
         // POST: Brand/Create
-        [HttpPost]
+        [HttpPost("/Brand/add")]
         public IActionResult Post([FromBody] Brand value)
         {
-            var data = _brandService.AddBrand(value.Name, value.Value);
+            var data = _brandService.AddBrand(value.Name);
 
             if (data == null)
             {
-                return BadRequest();
+                return BadRequest("This is boolshit");
             }
             else
             {

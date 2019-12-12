@@ -42,10 +42,10 @@ namespace internet_shop.Controllers
 
 
         // POST: Promos/Create
-        [HttpPost]
+        [HttpPost("/Promos/Create")]
         public IActionResult Post([FromBody] Promos value)
         {
-            var data = _promosService.AddPromo(value.Name, value.Value);
+            var data = _promosService.AddPromo(value.Name, value.Value, value.CategoryId, value.BrandId,value.ProductId,value.IsEnabled );
 
             if (data == null)
             {
