@@ -42,10 +42,10 @@ namespace internet_shop.Controllers
 
 
         // POST: Promos/Create
-        [HttpPost]
+        [HttpPost("/Promos/Create")]
         public IActionResult Post([FromBody] Promos value)
         {
-            var data = _promosService.AddPromo(value.Name, value.Value);
+            var data = _promosService.AddPromo(value.Name, value.Value, value.CategoryId, value.BrandId,value.ProductId,value.IsEnabled );
 
             if (data == null)
             {
@@ -75,7 +75,7 @@ namespace internet_shop.Controllers
         [HttpPut]
         public IActionResult Put([FromBody] Promos value)
         {
-            var data = _promosService.Updatepromos(value);
+            var data = _promosService.UpdatePromos(value);
             if (data.promos == null)
             {
                 return BadRequest(data.exception.Message);

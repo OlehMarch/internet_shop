@@ -56,32 +56,45 @@ namespace internet_shop.Services
 
             return (result.State == EntityState.Deleted, null);
         }
-        public Promos AddPromo(string name, int value)
+        public Promos AddPromo(string name, int value, int categoryId, int brandId, int productId, bool isEnabled)
         {
-            Promos promo = ToEntity(name, value);
-            Promos.Add(promo);
-            try
-            {
-                _db.SaveChanges();
-            }
-            catch
-            {
+            var promos = ToEntity(name, value, categoryId, brandId, productId, isEnabled);
+            if (promos == null)
                 return null;
+            else
+            {
+                Promos.Add(promos);
+                _db.SaveChanges();
+                return promos;
             }
+            //Promos promo = ToEntity(name, value, categoryId, brandId, productId, isEnabled);
+            //Promos.Add(promo);
+            //try
+            //{
+            //    _db.SaveChanges();
+            //}
+            //catch
+            //{
+            //    return null;
+            //}
 
-            return promo;
+            //return promo;
         }
-        public Promos ToEntity(string name, int value)
+        public Promos ToEntity(string name, int value, int categoryId, int brandId, int productId, bool isEnabled)
         {
             return new Promos
             {
                 Name = name,
                 Value = value,
+                CategoryId = categoryId,
+                BrandId = brandId,
+                ProductId = productId,
+                IsEnabled = isEnabled
             };
         }
-        public (Promos promos, Exception exception) Updatepromos(Promos _promos)
+        public (Promos promos, Exception exception) UpdatePromos(Promos _promos)
         {
-            Promos promos = this.Promos.SingleOrDefault((Promos promos) => promos.Name == _promos.Name);
+            Promos promos = Promos.SingleOrDefault((Promos promos) => promos.Name == _promos.Name);
 
             if (promos == null)
             {

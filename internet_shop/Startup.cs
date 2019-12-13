@@ -66,6 +66,7 @@ namespace internet_shop
             services.AddDbContext<OrderDbContext>();
             services.AddDbContext<PromosDbContext>();
             services.AddDbContext<ProductDbContext>();
+            services.AddDbContext<ProfileDbContext>();
             services.AddDbContext<CategoryDbContext>();
         }
 
