@@ -22,7 +22,7 @@ namespace internet_shop.Services
 
         public List<Promos> GetAllPromos()
         {
-             return Promos.ToList();
+            return Promos.ToList();
         }
 
         public Promos GetPromoById(int id)
@@ -56,17 +56,17 @@ namespace internet_shop.Services
 
             return (result.State == EntityState.Deleted, null);
         }
-        public Promos AddPromo(string name, int value, int categoryId, int brandId,int productId,bool isEnabled)
+        public Promos AddPromo(string name, int value, int categoryId, int brandId, int productId, bool isEnabled)
         {
-                var promos = ToEntity(name, value, categoryId, brandId, productId, isEnabled);
-                if (promos == null)
-                    return null;
-                else
-                {
-                    Promos.Add(promos);
-                    _db.SaveChanges();
-                    return promos;
-                }
+            var promos = ToEntity(name, value, categoryId, brandId, productId, isEnabled);
+            if (promos == null)
+                return null;
+            else
+            {
+                Promos.Add(promos);
+                _db.SaveChanges();
+                return promos;
+            }
             //Promos promo = ToEntity(name, value, categoryId, brandId, productId, isEnabled);
             //Promos.Add(promo);
             //try
@@ -80,7 +80,7 @@ namespace internet_shop.Services
 
             //return promo;
         }
-        public Promos ToEntity(string name, int value,int categoryId, int brandId, int productId, bool isEnabled)
+        public Promos ToEntity(string name, int value, int categoryId, int brandId, int productId, bool isEnabled)
         {
             return new Promos
             {
@@ -92,7 +92,7 @@ namespace internet_shop.Services
                 IsEnabled = isEnabled
             };
         }
-        public (Promos promos, Exception exception) Updatepromos(Promos _promos)
+        public (Promos promos, Exception exception) UpdatePromos(Promos _promos)
         {
             Promos promos = Promos.SingleOrDefault((Promos promos) => promos.Name == _promos.Name);
 

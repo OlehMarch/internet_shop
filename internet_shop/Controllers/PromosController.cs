@@ -75,7 +75,7 @@ namespace internet_shop.Controllers
         [HttpPut]
         public IActionResult Put([FromBody] Promos value)
         {
-            var data = _promosService.Updatepromos(value);
+            var data = _promosService.UpdatePromos(value);
             if (data.promos == null)
             {
                 return BadRequest(data.exception.Message);

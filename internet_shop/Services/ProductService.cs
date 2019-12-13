@@ -4,36 +4,37 @@ using System.Collections.Generic;
 using internet_shop.Models;
 using internet_shop.DbContexts;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace internet_shop.Services
 {
     public class ProductService
     {
-        public ProductService(ProductDbContext db )
+        public ProductService(ProductDbContext db)
         {
             _db = db;
         }
+
         private readonly ProductDbContext _db;
         private DbSet<Product> Products => _db.Products;
-        public bool AddNewProduct(string name, string description,int brandId,int categoryId, int price, int updatedPrice)
+
+        public bool AddNewProduct(string name, string description, int brandId, int categoryId, int price, int updatedPrice)
         {
-            var product = ToEntity(name, description, brandId,categoryId, price, updatedPrice);
-             if (product == null)
-                 return false;
-             else
-             {
+            var product = ToEntity(name, description, brandId, categoryId, price, updatedPrice);
+            if (product == null)
+                return false;
+            else
+            {
                 Products.Add(product);
                 _db.SaveChanges();
                 product = ProductToDTO(product);
                 Products.Update(product);
                 _db.SaveChanges();
                 return true;
-             }
+            }
         }
         public List<Product> GetAll()
         {
-                return Products.ToList();
+            return Products.ToList();
         }
 
         public bool UpdateProduct()
@@ -57,7 +58,7 @@ namespace internet_shop.Services
 
         public bool Remove(int id)
         {
-            using (ProductDbContext db = new ProductDbContext())
+            using (ProductDbContext db = new ProductDbContext()) // TODO(friday13): change to DI usage
             {
                 var products = db.Products.Find(id);
                 if (products == null)
@@ -71,10 +72,10 @@ namespace internet_shop.Services
 
             }
         }
-        
+
         public Product GetProduct(int id)
         {
-            using (ProductDbContext db = new ProductDbContext())
+            using (ProductDbContext db = new ProductDbContext()) // TODO(friday13): change to DI usage
             {
                 if (db.Products.Find(id) == null)
                 {
@@ -89,13 +90,13 @@ namespace internet_shop.Services
 
         public Product ToEntity(string name, string description, int brandId, int categoryId, int price, int updatedPrice)
         {
-            return new Product 
-            { 
-                Name = name, 
-                Description = description, 
-                BrandId = brandId, 
-                CategoryId = categoryId, 
-                Price = price, 
+            return new Product
+            {
+                Name = name,
+                Description = description,
+                BrandId = brandId,
+                CategoryId = categoryId,
+                Price = price,
                 UpdatedPrice = updatedPrice,
             };
         }
@@ -111,18 +112,18 @@ namespace internet_shop.Services
         {
             var product = Products.SingleOrDefault((Product product) => product.Id == id);
             //List<Promos> promos = new List<Promos>();
-            var promos = _db.Promos.Where((x)=> x.IsEnabled == true).ToList();
+            var promos = _db.Promos.Where((x) => x.IsEnabled == true).ToList();
 
-             //var promos =(_db.Promos.GroupBy((x)=> x.IsEnabled == true).ToList());
-            
-            return ForToPromos(promos,product);
+            //var promos =(_db.Promos.GroupBy((x)=> x.IsEnabled == true).ToList());
+
+            return ForToPromos(promos, product);
         }
 
         public int ForToPromos(List<Promos> promos, Product product)
         {
             List<Promos> promoList = new List<Promos>();
             for (int item = 0; item < promos.Count; item++)
-            { 
+            {
                 if (product.CategoryId == promos[item].CategoryId ||
                     product.BrandId == promos[item].BrandId ||
                     product.Id == promos[item].ProductId)
@@ -134,7 +135,7 @@ namespace internet_shop.Services
             {
                 return 0;
             }
-            else 
+            else
             {
                 int promo = promoList.Max(x => x.Value);
                 return promo;

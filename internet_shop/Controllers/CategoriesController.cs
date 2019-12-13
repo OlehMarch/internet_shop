@@ -18,7 +18,7 @@ namespace internet_shop.Controllers
 
         private readonly CategoriesService _catService;
 
-        // GET: api/Cat
+        // GET: Categories
         [HttpGet]
         public List<Categories> Get()
         {
@@ -26,7 +26,7 @@ namespace internet_shop.Controllers
 
         }
 
-        // GET: api/Cat/5
+        // GET: Categories/5
         [HttpGet("{id}")]
         public Categories GetById(int id)
         {
@@ -34,14 +34,14 @@ namespace internet_shop.Controllers
             return cat;
         }
 
-        [HttpGet("/allCategory")]
+        [HttpGet("/all-products")]
         public List<Product> GetAllProductByCategory([FromBody] Product product)
         {
             var products = _catService.GetProductsByCategory(product.CategoryId);
-                return products;
+            return products;
         }
 
-        // POST: api/Cat
+        // POST: Categories
         [HttpPost]
         public IActionResult AddNewCategory([FromBody] Categories categories)
         {
@@ -52,7 +52,7 @@ namespace internet_shop.Controllers
                 return Ok("Code 200, new category is added");
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: Categories/5
         [HttpDelete("/delete")]
         public IActionResult Delete(int id)
         {

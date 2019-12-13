@@ -2,7 +2,6 @@
 
 using internet_shop.Services;
 using internet_shop.Models;
-using System;
 
 namespace internet_shop.Controllers
 {

@@ -17,19 +17,20 @@ namespace internet_shop.Services
             _db = db;
             _dbProduct = dbProduct;
         }
+
         private readonly ProductDbContext _dbProduct;
         private readonly CategoryDbContext _db;
-        private DbSet<Product> _Products => _dbProduct.Products;
-        private DbSet<Categories> _Categories => _db.Categories;
+        private DbSet<Product> Products => _dbProduct.Products;
+        private DbSet<Categories> Categories => _db.Categories;
 
         public List<Categories> GetAllCategory()
         {
-            return _Categories.ToList();
+            return Categories.ToList();
         }
 
         public List<Product> GetProductsByCategory(int id)
         {
-            var products = _Products.Where((x)=> x.CategoryId == id).ToList();
+            var products = Products.Where((x)=> x.CategoryId == id).ToList();
             if (products == null || products.Count == 0)
                 return null;
             else
@@ -38,7 +39,7 @@ namespace internet_shop.Services
 
         public Categories GetCategoryById(int id)
         {
-            var cat = _Categories.SingleOrDefault((Categories cat) => cat.Id == id);
+            var cat = Categories.SingleOrDefault((Categories cat) => cat.Id == id);
             if (cat == null)
             {
                 return null;
@@ -47,7 +48,7 @@ namespace internet_shop.Services
         }
         public bool DeleteCategoryById(int id)
         {
-            Categories cat = _Categories.SingleOrDefault((Categories cat) => cat.Id == id);
+            Categories cat = Categories.SingleOrDefault((Categories cat) => cat.Id == id);
 
             if (cat == null)
             {
@@ -57,7 +58,7 @@ namespace internet_shop.Services
             {
                 _db.SaveChanges();
             }
-            catch (Exception e)
+            catch
             {
                 return false;
             }
@@ -67,7 +68,7 @@ namespace internet_shop.Services
         public bool AddCategories(string name)
         {
             Categories cat = ToEntity(name);
-            _Categories.Add(cat);
+            Categories.Add(cat);
             try
             {
                 _db.SaveChanges();

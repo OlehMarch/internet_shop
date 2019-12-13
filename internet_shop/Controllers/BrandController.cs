@@ -19,14 +19,14 @@ namespace internet_shop.Controllers
         {
             _brandService = brandService;
         }
-        // GET: api/Brand
+        // GET: Brand
         [HttpGet]
         public IEnumerable<Brand> Get()
         {
             return _brandService.GetAllBrand();
         }
 
-        // GET: api/Brand/5
+        // GET: Brand/5
         [HttpGet("{id}")]
 
         public IActionResult Get(int id)
@@ -42,7 +42,7 @@ namespace internet_shop.Controllers
             }
         }
 
-        // POST: Brand/Create
+        // POST: Brand/add
         [HttpPost("/Brand/add")]
         public IActionResult Post([FromBody] Brand value)
         {
@@ -50,7 +50,7 @@ namespace internet_shop.Controllers
 
             if (data == null)
             {
-                return BadRequest("This is boolshit");
+                return BadRequest();
             }
             else
             {
