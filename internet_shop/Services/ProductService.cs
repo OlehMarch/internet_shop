@@ -23,7 +23,7 @@ namespace internet_shop.Services
                 }
             }
         }
-        public List<Product> GetAll()
+        public List<ProductModel> GetAll()
         {
             using (ProductDbContext db = new ProductDbContext())
             {
@@ -48,7 +48,7 @@ namespace internet_shop.Services
             }
         }
         
-        public Product GetProduct(int id)
+        public ProductModel GetProduct(int id)
         {
             using (ProductDbContext db = new ProductDbContext())
             {
@@ -63,9 +63,9 @@ namespace internet_shop.Services
             }
         }
 
-        public Product ToEntity(string name, string description, int price)
+        public ProductModel ToEntity(string name, string description, int price)
         {
-            return new Product { Name = name, Description = description, Price = price };
+            return new ProductModel { Name = name, Description = description, Price = price };
         }
     }
 }

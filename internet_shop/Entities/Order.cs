@@ -1,4 +1,5 @@
-﻿using System;
+﻿using internet_shop.Dto.Enums;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace internet_shop.Entities
@@ -10,10 +11,11 @@ namespace internet_shop.Entities
         public DateTime Created { get; set; }
         public decimal Total { get; set; }
 
-        [ForeignKey("Client")]
+      //  [ForeignKey("Client")]
         public int ClientId { get; set; }
 
-        [ForeignKey("Product")]
+       // [ForeignKey("Product")]
         public int CartId { get; set; }
+        public OrderState State { get; set; }
     }
 }
