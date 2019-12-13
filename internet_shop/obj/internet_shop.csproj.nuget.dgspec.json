@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\source\\repos\\internet_shop\\internet_shop\\internet_shop.csproj": {}
+    "C:\\Users\\User\\Desktop\\internet_shop-master\\internet_shop-master\\internet_shop\\internet_shop.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\source\\repos\\internet_shop\\internet_shop\\internet_shop.csproj": {
+    "C:\\Users\\User\\Desktop\\internet_shop-master\\internet_shop-master\\internet_shop\\internet_shop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\source\\repos\\internet_shop\\internet_shop\\internet_shop.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\internet_shop-master\\internet_shop-master\\internet_shop\\internet_shop.csproj",
         "projectName": "internet_shop",
-        "projectPath": "C:\\Users\\user\\source\\repos\\internet_shop\\internet_shop\\internet_shop.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\source\\repos\\internet_shop\\internet_shop\\obj\\",
+        "projectPath": "C:\\Users\\User\\Desktop\\internet_shop-master\\internet_shop-master\\internet_shop\\internet_shop.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\internet_shop-master\\internet_shop-master\\internet_shop\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,6 +40,38 @@
       },
       "frameworks": {
         "netcoreapp3.0": {
+          "dependencies": {
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            },
+            "JSON": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
