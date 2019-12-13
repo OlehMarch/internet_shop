@@ -59,7 +59,7 @@ namespace internet_shop.Services
             {
                 _db.SaveChanges();
             }
-            catch (Exception e)
+            catch
             {
                 return false;
             }
