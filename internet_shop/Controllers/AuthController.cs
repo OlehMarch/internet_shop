@@ -29,7 +29,5 @@ namespace internet_shop.Controllers
 
             return Ok(user);
         }
-        
-
     }
 }

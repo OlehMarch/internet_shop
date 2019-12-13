@@ -1,5 +1,6 @@
-﻿using internet_shop.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+
+using internet_shop.Models;
 
 namespace internet_shop.DbContexts
 {
