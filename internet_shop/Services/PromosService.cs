@@ -94,7 +94,7 @@ namespace internet_shop.Services
         }
         public (Promos promos, Exception exception) Updatepromos(Promos _promos)
         {
-            Promos promos = this.Promos.SingleOrDefault((Promos promos) => promos.Name == _promos.Name);
+            Promos promos = Promos.SingleOrDefault((Promos promos) => promos.Name == _promos.Name);
 
             if (promos == null)
             {
