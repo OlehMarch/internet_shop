@@ -9,10 +9,5 @@ namespace internet_shop.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Value { get; set; }
-
-         
-
-        //public List<Promos> promo {get; set}
     }
 }

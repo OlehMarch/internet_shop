@@ -38,7 +38,7 @@ namespace internet_shop.Controllers
         [HttpPost]
         public IActionResult AddNewCategory([FromBody] Categories categories)
         {
-            var category = _catService.AddCategories(categories.Name,categories.Value);
+            var category = _catService.AddCategories(categories.Name);
             if (category == false)
                 return BadRequest("Bad request");
             else

@@ -6,18 +6,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 using internet_shop.Models;
-using internet_shop.DbContexts;
 
 namespace internet_shop.Services
 {
     public class BrandService
     {
-        public BrandService(BrandDbContext db)
+        public BrandService(BaseDbContext db)
         {
             _db = db;
         }
 
-        private readonly BrandDbContext _db;
+        private readonly BaseDbContext _db;
         private DbSet<Brand> Brand => _db.Brands;
 
         public List<Brand> GetAllBrand()
@@ -56,9 +55,9 @@ namespace internet_shop.Services
 
             return (result.State == EntityState.Deleted, null);
         }
-        public Brand AddBrand(string name, int value)
+        public Brand AddBrand(string name)
         {
-            Brand brand = ToEntity(name, value);
+            Brand brand = ToEntity(name);
             Brand.Add(brand);
             try
             {
@@ -71,12 +70,11 @@ namespace internet_shop.Services
 
             return brand;
         }
-        public Brand ToEntity(string name, int value)
+        public Brand ToEntity(string name)
         {
             return new Brand
             {
                 Name = name,
-                Value = value,
             };
         }
     }

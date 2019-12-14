@@ -6,56 +6,51 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
+using internet_shop.Models;
 using internet_shop.Helpers;
 using internet_shop.Entities;
-using internet_shop.DbContexts;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using internet_shop.Models;
 
 namespace internet_shop.Services
 {
     public class UserService
     {
-        private readonly AppSettings _appSettings;
-        private readonly ProfileDbContext _profileDbContext;
-        private readonly UsersDbContext _userDbContext;
-        public UserService(IOptions<AppSettings> appSettings, ProfileDbContext profileDbContext, UsersDbContext usersDbContext)
+        public UserService(IOptions<AppSettings> appSettings, BaseDbContext context)
         {
             _appSettings = appSettings.Value;
-            _profileDbContext = profileDbContext;
-            _userDbContext = usersDbContext;
+            _context = context;
         }
-        private DbSet<Profile> _profiles => _profileDbContext.Profiles;
-        private DbSet<User> _users => _userDbContext.Users;
+
+        private readonly AppSettings _appSettings;
+        private readonly BaseDbContext _context;
+
+        private DbSet<Profile> Profiles => _context.Profiles;
+        private DbSet<User> Users => _context.Users;
 
         public List<Profile> GetAllProfiles()
         {
-            return _profiles.ToList();
+            return Profiles.ToList();
         }
 
         public Profile GetProfileById(int id)
         {
-            var profile = _profiles.SingleOrDefault((Profile profile) => profile.Id == id);
+            var profile = Profiles.SingleOrDefault((Profile profile) => profile.Id == id);
             if (profile == null)
             {
                 return null;
             }
             return profile;
         }
-        public UserService(IOptions<AppSettings> appSettings, ProfileDbContext profileDbContext)
-        {
-            _appSettings = appSettings.Value;
-        }
         public User Authenticate(string username, string password)
         {
             Profile profile = null;
-            var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
+            var user = Users.SingleOrDefault(x => x.Username == username && x.Password == password);
             if (user != null)
             {
-                var data = _profiles.SingleOrDefault(x => x.Username == username);
+                var data = Profiles.SingleOrDefault(x => x.Username == username);
                 if (data != null)
                     profile = ToEntity(data.FirstName, data.LastName, data.Email, data.Address, data.Username, data.Password);
             }
@@ -82,26 +77,26 @@ namespace internet_shop.Services
         }
         public Profile AddUser(string fn, string ln, string em, string addr, string username, string password)
         {
-            var data = _users.SingleOrDefault(x => x.Username == username);
+            var data = Users.SingleOrDefault(x => x.Username == username);
             Profile newdata = null;
             if (data != null)
                 return null;
             else
                 newdata=ToEntity(fn,  ln, em, addr, username, password);
-            _profiles.Add(newdata);
+            Profiles.Add(newdata);
             try
             {
-                _profileDbContext.SaveChanges();
+                _context.SaveChanges();
             }
             catch
             {
                 return null;
             }
             User newuser = ToEntityUser(username, password);
-            _users.Add(newuser);
+            Users.Add(newuser);
             try
             {
-                _userDbContext.SaveChanges();
+                _context.SaveChanges();
             }
             catch
             {
@@ -133,23 +128,23 @@ namespace internet_shop.Services
         }
         public IEnumerable<User> GetAll()
         {
-            return _users.WithoutPasswords();
+            return Users.WithoutPasswords();
         }
 
         public (bool result, Exception exception) DeleteProfileById(int id)
         {
-            var profile = _profiles.SingleOrDefault((Profile profile) => profile.Id == id);
+            var profile = Profiles.SingleOrDefault((Profile profile) => profile.Id == id);
 
             if (profile == null)
             {
                 return (false, new ArgumentNullException($"Promo with id: {id} not found"));
             }
 
-            EntityEntry<Profile> result = _profiles.Remove(profile);
+            EntityEntry<Profile> result = Profiles.Remove(profile);
 
             try
             {
-                _profileDbContext.SaveChanges();
+                _context.SaveChanges();
             }
             catch (Exception e)
             {
@@ -161,7 +156,7 @@ namespace internet_shop.Services
 
         public (Profile profile, Exception exception) Updateprofile(Profile _profile)
         {
-            Profile profile = _profiles.SingleOrDefault((Profile profile) => profile.Id == _profile.Id);
+            Profile profile = Profiles.SingleOrDefault((Profile profile) => profile.Id == _profile.Id);
 
             if (profile == null)
             {
@@ -179,7 +174,7 @@ namespace internet_shop.Services
             }
             try
             {
-                _profileDbContext.SaveChanges();
+                _context.SaveChanges();
             }
             catch (Exception e)
             {
