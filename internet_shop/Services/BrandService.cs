@@ -6,18 +6,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 using internet_shop.Models;
-using internet_shop.DbContexts;
 
 namespace internet_shop.Services
 {
     public class BrandService
     {
-        public BrandService(BrandDbContext db)
+        public BrandService(BaseDbContext db)
         {
             _db = db;
         }
 
-        private readonly BrandDbContext _db;
+        private readonly BaseDbContext _db;
         private DbSet<Brand> Brand => _db.Brands;
 
         public List<Brand> GetAllBrand()

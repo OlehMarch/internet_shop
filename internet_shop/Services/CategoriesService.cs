@@ -5,19 +5,18 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 using internet_shop.Models;
-using internet_shop.DbContexts;
 
 namespace internet_shop.Services
 {
     public class CategoriesService
     {
 
-        public CategoriesService(CategoryDbContext db)
+        public CategoriesService(BaseDbContext db)
         {
             _db = db;
         }
 
-        private readonly CategoryDbContext _db;
+        private readonly BaseDbContext _db;
         private DbSet<Categories> Cat => _db.Categories;
 
         public List<Categories> GetAllCategory()
@@ -46,7 +45,7 @@ namespace internet_shop.Services
             {
                 _db.SaveChanges();
             }
-            catch (Exception e)
+            catch
             {
                 return false;
             }

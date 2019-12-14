@@ -7,18 +7,17 @@ using Microsoft.EntityFrameworkCore;
 
 using internet_shop.Models;
 using internet_shop.Entities;
-using internet_shop.DbContexts;
 
 namespace internet_shop.Services
 {
     public class OrderService
     {
-        public OrderService(OrderDbContext context)
+        public OrderService(BaseDbContext context)
         {
-            this.context = context;
+            _context = context;
         }
 
-        private readonly OrderDbContext context;
+        private readonly BaseDbContext _context;
 
         private OrderModel Map(Order order)
             => new OrderModel
@@ -58,14 +57,14 @@ namespace internet_shop.Services
             };
         }
 
-        public async Task<IReadOnlyCollection<OrderModel>> GetAsync() => GetMap(await context.Orders.ToListAsync());
+        public async Task<IReadOnlyCollection<OrderModel>> GetAsync() => GetMap(await _context.Orders.ToListAsync());
 
-        public async Task<OrderModel> GetAsync(int id) => GetMap(await context.Orders.FindAsync(id));
+        public async Task<OrderModel> GetAsync(int id) => GetMap(await _context.Orders.FindAsync(id));
 
         public async Task<OrderModel> AddAsync(OrderModel orderData)
         {
-            var addingResult = await context.Orders.AddAsync(Map(orderData));
-            context.SaveChanges();
+            var addingResult = await _context.Orders.AddAsync(Map(orderData));
+            _context.SaveChanges();
             return Map(addingResult.Entity);
         }
     }

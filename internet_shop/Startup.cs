@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 using internet_shop.Helpers;
 using internet_shop.Services;
-using internet_shop.DbContexts;
 
 namespace internet_shop
 {
@@ -26,6 +25,9 @@ namespace internet_shop
         {
             services.AddCors();
             services.AddControllersWithViews();
+
+            services.AddMemoryCache();
+            services.AddSession();
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -53,6 +55,7 @@ namespace internet_shop
             });
 
             // configure DI for application services
+            services.AddTransient<CartService>();
             services.AddTransient<UserService>();
             services.AddTransient<BrandService>();
             services.AddTransient<OrderService>();
@@ -62,18 +65,13 @@ namespace internet_shop
 
             // configure DI for DB
             services.AddDbContext<BaseDbContext>();
-            services.AddDbContext<BrandDbContext>();
-            services.AddDbContext<OrderDbContext>();
-            services.AddDbContext<PromosDbContext>();
-            services.AddDbContext<ProductDbContext>();
-            services.AddDbContext<ProfileDbContext>();
-            services.AddDbContext<CategoryDbContext>();
-            services.AddDbContext<UsersDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
+            app.UseSession();
+
             app.UseRouting();
 
             // global cors policy

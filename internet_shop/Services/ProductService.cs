@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 
 using internet_shop.Models;
-using internet_shop.DbContexts;
 
 namespace internet_shop.Services
 {
@@ -10,7 +9,7 @@ namespace internet_shop.Services
     {
         public bool AddNewProduct(string name, string description, int price)
         {
-            using (ProductDbContext db = new ProductDbContext())
+            using (BaseDbContext db = new BaseDbContext())
             {
                 var product = ToEntity(name, description, price);
                 if (product == null)
@@ -25,7 +24,7 @@ namespace internet_shop.Services
         }
         public List<Product> GetAll()
         {
-            using (ProductDbContext db = new ProductDbContext())
+            using (BaseDbContext db = new BaseDbContext())
             {
                 return db.Products.ToList();
             }
@@ -33,7 +32,7 @@ namespace internet_shop.Services
 
         public bool Remove(int id)
         {
-            using (ProductDbContext db = new ProductDbContext())
+            using (BaseDbContext db = new BaseDbContext())
             {
                 var products = db.Products.Find(id);
                 if (products == null)
@@ -50,7 +49,7 @@ namespace internet_shop.Services
         
         public Product GetProduct(int id)
         {
-            using (ProductDbContext db = new ProductDbContext())
+            using (BaseDbContext db = new BaseDbContext())
             {
                 if (db.Products.Find(id) == null)
                 {
