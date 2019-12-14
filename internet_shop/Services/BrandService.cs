@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 using internet_shop.Models;
 using internet_shop.DbContexts;
@@ -11,30 +12,17 @@ namespace internet_shop.Services
 {
     public class BrandService
     {
-        public BrandService(BrandDbContext db, ProductDbContext dbProduct)
+        public BrandService(BrandDbContext db)
         {
             _db = db;
-            _dbProduct = dbProduct;
-
         }
 
         private readonly BrandDbContext _db;
-        private readonly ProductDbContext _dbProduct;
         private DbSet<Brand> Brand => _db.Brands;
-        private DbSet<Product> Products => _dbProduct.Products;
 
         public List<Brand> GetAllBrand()
         {
             return Brand.ToList();
-        }
-
-        public List<Product> GetProductsByBrand(int id)
-        {
-            var products = Products.Where((x) => x.BrandId == id).ToList();
-            if (products == null || products.Count == 0)
-                return null;
-            else
-                return products;
         }
 
         public Brand GetBrandById(int id)
@@ -46,30 +34,31 @@ namespace internet_shop.Services
             }
             return brand;
         }
-
-        public bool DeleteBrandById(int id)
+        public (bool result, Exception exception) DeleteBrandById(int id)
         {
             Brand brand = Brand.SingleOrDefault((Brand brand) => brand.Id == id);
 
             if (brand == null)
             {
-                return false;
+                return (false, new ArgumentNullException($"Brand with specific id: {id} not found"));
             }
+
+            EntityEntry<Brand> result = Brand.Remove(brand);
+
             try
             {
                 _db.SaveChanges();
             }
-            catch
+            catch (Exception e)
             {
-                return false;
+                return (false, new DbUpdateException($"Cannot save changes: {e.Message}"));
             }
 
-            return true;
+            return (result.State == EntityState.Deleted, null);
         }
-
-        public bool AddBrand(string name)
+        public Brand AddBrand(string name, int value)
         {
-            Brand brand = ToEntity(name);
+            Brand brand = ToEntity(name, value);
             Brand.Add(brand);
             try
             {
@@ -77,17 +66,17 @@ namespace internet_shop.Services
             }
             catch
             {
-                return false;
+                return null;
             }
 
-            return true;
+            return brand;
         }
-
-        public Brand ToEntity(string name)
+        public Brand ToEntity(string name, int value)
         {
             return new Brand
             {
-                Name = name
+                Name = name,
+                Value = value,
             };
         }
     }

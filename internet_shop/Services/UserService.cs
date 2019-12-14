@@ -6,23 +6,19 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 
 using Microsoft.Extensions.Options;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-using internet_shop.Models;
 using internet_shop.Helpers;
 using internet_shop.Entities;
 using internet_shop.DbContexts;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using internet_shop.Models;
 
 namespace internet_shop.Services
 {
     public class UserService
     {
-
-        // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-
-
         private readonly AppSettings _appSettings;
         private readonly ProfileDbContext _profileDbContext;
         private readonly UsersDbContext _userDbContext;
@@ -52,7 +48,6 @@ namespace internet_shop.Services
         public UserService(IOptions<AppSettings> appSettings, ProfileDbContext profileDbContext)
         {
             _appSettings = appSettings.Value;
-            _profileDbContext = profileDbContext;
         }
         public User Authenticate(string username, string password)
         {

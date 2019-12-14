@@ -12,34 +12,22 @@ namespace internet_shop.Services
     public class CategoriesService
     {
 
-        public CategoriesService(CategoryDbContext db, ProductDbContext dbProduct)
+        public CategoriesService(CategoryDbContext db)
         {
             _db = db;
-            _dbProduct = dbProduct;
         }
 
-        private readonly ProductDbContext _dbProduct;
         private readonly CategoryDbContext _db;
-        private DbSet<Product> Products => _dbProduct.Products;
-        private DbSet<Categories> Categories => _db.Categories;
+        private DbSet<Categories> Cat => _db.Categories;
 
         public List<Categories> GetAllCategory()
         {
-            return Categories.ToList();
-        }
-
-        public List<Product> GetProductsByCategory(int id)
-        {
-            var products = Products.Where((x)=> x.CategoryId == id).ToList();
-            if (products == null || products.Count == 0)
-                return null;
-            else
-                return products;
+            return Cat.ToList();
         }
 
         public Categories GetCategoryById(int id)
         {
-            var cat = Categories.SingleOrDefault((Categories cat) => cat.Id == id);
+            var cat = Cat.SingleOrDefault((Categories cat) => cat.Id == id);
             if (cat == null)
             {
                 return null;
@@ -48,7 +36,7 @@ namespace internet_shop.Services
         }
         public bool DeleteCategoryById(int id)
         {
-            Categories cat = Categories.SingleOrDefault((Categories cat) => cat.Id == id);
+            Categories cat = Cat.SingleOrDefault((Categories cat) => cat.Id == id);
 
             if (cat == null)
             {
@@ -58,17 +46,17 @@ namespace internet_shop.Services
             {
                 _db.SaveChanges();
             }
-            catch
+            catch (Exception e)
             {
                 return false;
             }
 
             return true;
         }
-        public bool AddCategories(string name)
+        public bool AddCategories(string name, int value)
         {
-            Categories cat = ToEntity(name);
-            Categories.Add(cat);
+            Categories cat = ToEntity(name, value);
+            Cat.Add(cat);
             try
             {
                 _db.SaveChanges();
@@ -80,11 +68,12 @@ namespace internet_shop.Services
 
             return true;
         }
-        public Categories ToEntity(string name)
+        public Categories ToEntity(string name, int value)
         {
             return new Categories
             {
-                Name = name
+                Name = name,
+                Value = value,
             };
         }
     }

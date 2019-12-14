@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 using internet_shop.Models;
 using internet_shop.Services;
@@ -9,65 +11,73 @@ namespace internet_shop.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class BrandController : ControllerBase
+    public class BrandController : Controller
     {
+        private readonly BrandService _brandService;
+
         public BrandController(BrandService brandService)
         {
             _brandService = brandService;
         }
-
-        private readonly BrandService _brandService;
-
-        // GET: Brand
+        // GET: api/Brand
         [HttpGet]
-        public List<Brand> Get()
+        public IEnumerable<Brand> Get()
         {
             return _brandService.GetAllBrand();
         }
 
-        // GET: Brand/5
+        // GET: api/Brand/5
         [HttpGet("{id}")]
 
-        public Brand GetById(int id)
+        public IActionResult Get(int id)
         {
-            // TODO(OleksandrRiznichenko): why removed null check?
-            var brand = _brandService.GetBrandById(id);
-            return brand;
-        }
-
-        [HttpGet("ProductById")]
-        public List<Product> GetAllProductByBrand([FromBody] Product product)
-        {
-            // TODO(OleksandrRiznichenko): why removed null check?
-            var products = _brandService.GetProductsByBrand(product.BrandId);
-            return products;
+            Brand brand = _brandService.GetBrandById(id);
+            if (brand == null)
+            {
+                return NotFound($"Unfortunately no brand found with id: {id}");
+            }
+            else
+            {
+                return Ok(brand);
+            }
         }
 
         // POST: Brand/Create
         [HttpPost]
-        public IActionResult AddNewBrand([FromBody] Brand brand)
+        public IActionResult Post([FromBody] Brand value)
         {
-            var brands = _brandService.AddBrand(brand.Name);
+            var data = _brandService.AddBrand(value.Name, value.Value);
 
-            if (brands == false)
+            if (data == null)
             {
-                return BadRequest("This is bad request");
+                return BadRequest();
             }
             else
             {
-                return Ok("Ok, new brand added");
+                return Ok();
             }
         }
 
-        // DELETE: Brand/5
-        [HttpDelete("/delete")]
+        // GET: Brand/Delete/5
         public ActionResult Delete(int id)
         {
-            var brands = _brandService.DeleteBrandById(id);
-            if (brands == false)
-                return BadRequest("404");
-            else
-                return Ok("200");
+            return View();
+        }
+
+        // POST: Brand/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, IFormCollection collection)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }
