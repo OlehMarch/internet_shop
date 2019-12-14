@@ -43,7 +43,7 @@ namespace internet_shop.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] PromosForProductModel value)
         {
-            var data = _promosForProducService.AddPromoForProduct(value.Id, value.Name, value.UniversalId); //было value.Value поменял на Id
+            var data = _promosForProducService.AddPromoForProduct(value.Id, value.Name, value.UniversalId , value.Enabled); //было value.Value поменял на Id
 
             if (data == null)
             {
