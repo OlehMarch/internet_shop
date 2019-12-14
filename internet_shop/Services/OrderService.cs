@@ -15,10 +15,10 @@ namespace internet_shop.Services
     {
         public OrderService(OrderDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
-        private readonly OrderDbContext _context;
+        private readonly OrderDbContext context;
 
         private OrderModel Map(Order order)
             => new OrderModel
@@ -58,14 +58,14 @@ namespace internet_shop.Services
             };
         }
 
-        public async Task<IReadOnlyCollection<OrderModel>> GetAsync() => GetMap(await _context.Orders.ToListAsync());
+        public async Task<IReadOnlyCollection<OrderModel>> GetAsync() => GetMap(await context.Orders.ToListAsync());
 
-        public async Task<OrderModel> GetAsync(int id) => GetMap(await _context.Orders.FindAsync(id));
+        public async Task<OrderModel> GetAsync(int id) => GetMap(await context.Orders.FindAsync(id));
 
         public async Task<OrderModel> AddAsync(OrderModel orderData)
         {
-            var addingResult = await _context.Orders.AddAsync(Map(orderData));
-            _context.SaveChanges();
+            var addingResult = await context.Orders.AddAsync(Map(orderData));
+            context.SaveChanges();
             return Map(addingResult.Entity);
         }
     }

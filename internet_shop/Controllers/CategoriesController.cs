@@ -18,41 +18,34 @@ namespace internet_shop.Controllers
 
         private readonly CategoriesService _catService;
 
-        // GET: Categories
+        // GET: api/Cat
         [HttpGet]
         public List<Categories> Get()
         {
             return _catService.GetAllCategory();
-
+            
         }
 
-        // GET: Categories/5
+        // GET: api/Cat/5
         [HttpGet("{id}")]
-        public Categories GetById(int id)
+        public Categories Get(int id)
         {
             var cat = _catService.GetCategoryById(id);
             return cat;
         }
 
-        [HttpGet("/all-products")]
-        public List<Product> GetAllProductByCategory([FromBody] Product product)
-        {
-            var products = _catService.GetProductsByCategory(product.CategoryId);
-            return products;
-        }
-
-        // POST: Categories
+        // POST: api/Cat
         [HttpPost]
         public IActionResult AddNewCategory([FromBody] Categories categories)
         {
-            var category = _catService.AddCategories(categories.Name);
+            var category = _catService.AddCategories(categories.Name,categories.Value);
             if (category == false)
                 return BadRequest("Bad request");
             else
                 return Ok("Code 200, new category is added");
         }
 
-        // DELETE: Categories/5
+        // DELETE: api/ApiWithActions/5
         [HttpDelete("/delete")]
         public IActionResult Delete(int id)
         {

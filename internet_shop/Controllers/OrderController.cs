@@ -11,19 +11,19 @@ namespace internet_shop.Controllers
     [Route("[controller]")]
     public class OrderController : Controller
     {
-        private readonly OrderService _orderService;
+        private readonly OrderService orderService;
         public OrderController(OrderService orderService)
         {
-            _orderService = orderService;
+            this.orderService = orderService;
         }
         [Route("/{id}")]
         [HttpGet]
-        public async Task<IActionResult> Get(int id) => Json(await _orderService.GetAsync(id));
+        public async Task<IActionResult> Get(int id) => Json(await orderService.GetAsync(id));
 
         //  [Route("add")]
         [HttpPost]
         public async Task<IActionResult> Add([FromQuery] OrderModel orderModel)
-             => Json(await _orderService.AddAsync(orderModel));
+             => Json(await orderService.AddAsync(orderModel));
 
 
 

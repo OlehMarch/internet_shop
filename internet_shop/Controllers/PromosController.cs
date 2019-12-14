@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-
 using Microsoft.AspNetCore.Mvc;
-
 using internet_shop.Models;
 using internet_shop.Services;
 
@@ -42,10 +40,11 @@ namespace internet_shop.Controllers
 
 
         // POST: Promos/Create
-        [HttpPost("/Promos/Create")]
+        [HttpPost]
         public IActionResult Post([FromBody] Promos value)
         {
-            var data = _promosService.AddPromo(value.Name, value.Value, value.CategoryId, value.BrandId,value.ProductId,value.IsEnabled );
+            var data = _promosService.AddPromo(value.Name, value.Value, value.UniversalId, 
+                value.ProductId, value.BrandId, value.CategoryId, value.IsEnabled);
 
             if (data == null)
             {
@@ -75,7 +74,7 @@ namespace internet_shop.Controllers
         [HttpPut]
         public IActionResult Put([FromBody] Promos value)
         {
-            var data = _promosService.UpdatePromos(value);
+            var data = _promosService.Updatepromos(value);
             if (data.promos == null)
             {
                 return BadRequest(data.exception.Message);
