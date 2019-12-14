@@ -17,107 +17,71 @@ namespace internet_shop.Controllers
             cartService = _cartService;
             
         }
-        [HttpPost("api/getCart")]
-        public void GetCart([FromQuery] string cartId, [FromQuery] string profileId, [FromQuery] string address)
+        [HttpPost("/getCart")]
+        public IActionResult GetCart([FromQuery] string cartId, [FromQuery] string profileId, [FromQuery] string address)
         {
-            cartService.GetCart(cartId, profileId, address);
+            var data = cartService.GetCart(cartId, profileId, address);
+            if (data == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok();
+            }
         }
 
-        [HttpPost("api/addToCart")]
-        public void AddToCart([FromQuery] int productId, [FromQuery] string cartId)
+        [HttpPost("/addToCart")]
+        public IActionResult AddToCart([FromQuery] int productId, [FromQuery] string cartId)
         {
-             cartService.Add(productId, cartId);
+            var data = cartService.Add(productId, cartId);
+            if (data == false)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok();
+            }
         }
-        [HttpPost("api/removeFromCart")]
-        public void RemoveFromCart([FromQuery] int productId, [FromQuery] string cartId)
+        [HttpPost("/removeFromCart")]
+        public IActionResult RemoveFromCart([FromQuery] int productId, [FromQuery] string cartId)
         {
-            cartService.Remove(productId, cartId);
+            var data = cartService.Remove(productId, cartId);
+            if (data == false)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok();
+            }
         }
-        [HttpPost("api/clearAllFromCart")]
-        public void ClearCart([FromQuery] string cartId)
+        [HttpPost("/clearAllFromCart")]
+        public IActionResult ClearCart([FromQuery] string cartId)
         {
-            cartService.Clear(cartId);
+            var data = cartService.Clear(cartId);
+            if (data == false)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok();
+            }
         }
-        [HttpPost("api/pay")]
-        public void PayCart([FromQuery] string cartId)
+        [HttpPost("/pay")]
+        public IActionResult PayCart([FromQuery] string cartId)
         {
-            cartService.Pay(cartId);
+            var data = cartService.Pay(cartId);
+            if (data == false)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok();
+            }
         }
-
-
-        //// GET: Cart/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    return View();
-        //}
-
-        //// GET: Cart/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        //// POST: Cart/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add insert logic here
-
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: Cart/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: Cart/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add update logic here
-
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: Cart/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: Cart/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add delete logic here
-
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
     }
 }
