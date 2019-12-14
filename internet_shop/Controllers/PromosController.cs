@@ -43,7 +43,7 @@ namespace internet_shop.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Promos value)
         {
-            var data = _promosService.AddPromo(value.Name, value.Value, value.UniversalId, 
+            var data = _promosService.AddPromo(value.Name, value.Value,
                 value.ProductId, value.BrandId, value.CategoryId, value.IsEnabled);
 
             if (data == null)

@@ -46,7 +46,7 @@ namespace internet_shop.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Brand value)
         {
-            var data = _brandService.AddBrand(value.Name, value.Value);
+            var data = _brandService.AddBrand(value.Name);
 
             if (data == null)
             {

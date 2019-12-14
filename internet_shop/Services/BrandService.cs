@@ -55,9 +55,9 @@ namespace internet_shop.Services
 
             return (result.State == EntityState.Deleted, null);
         }
-        public Brand AddBrand(string name, int value)
+        public Brand AddBrand(string name)
         {
-            Brand brand = ToEntity(name, value);
+            Brand brand = ToEntity(name);
             Brand.Add(brand);
             try
             {
@@ -70,12 +70,11 @@ namespace internet_shop.Services
 
             return brand;
         }
-        public Brand ToEntity(string name, int value)
+        public Brand ToEntity(string name)
         {
             return new Brand
             {
                 Name = name,
-                Value = value,
             };
         }
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 
 using Microsoft.EntityFrameworkCore;
@@ -10,23 +9,22 @@ namespace internet_shop.Services
 {
     public class CategoriesService
     {
-
         public CategoriesService(BaseDbContext db)
         {
             _db = db;
         }
 
         private readonly BaseDbContext _db;
-        private DbSet<Categories> Cat => _db.Categories;
+        private DbSet<Categories> Categories => _db.Categories;
 
         public List<Categories> GetAllCategory()
         {
-            return Cat.ToList();
+            return Categories.ToList();
         }
 
         public Categories GetCategoryById(int id)
         {
-            var cat = Cat.SingleOrDefault((Categories cat) => cat.Id == id);
+            var cat = Categories.SingleOrDefault((Categories cat) => cat.Id == id);
             if (cat == null)
             {
                 return null;
@@ -35,7 +33,7 @@ namespace internet_shop.Services
         }
         public bool DeleteCategoryById(int id)
         {
-            Categories cat = Cat.SingleOrDefault((Categories cat) => cat.Id == id);
+            Categories cat = Categories.SingleOrDefault((Categories cat) => cat.Id == id);
 
             if (cat == null)
             {
@@ -52,10 +50,10 @@ namespace internet_shop.Services
 
             return true;
         }
-        public bool AddCategories(string name, int value)
+        public bool AddCategories(string name)
         {
-            Categories cat = ToEntity(name, value);
-            Cat.Add(cat);
+            Categories cat = ToEntity(name);
+            Categories.Add(cat);
             try
             {
                 _db.SaveChanges();
@@ -67,12 +65,11 @@ namespace internet_shop.Services
 
             return true;
         }
-        public Categories ToEntity(string name, int value)
+        public Categories ToEntity(string name)
         {
             return new Categories
             {
                 Name = name,
-                Value = value,
             };
         }
     }

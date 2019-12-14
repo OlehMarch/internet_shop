@@ -59,10 +59,10 @@ namespace internet_shop.Services
 
             return (result.State == EntityState.Deleted, null);
         }
-        public Promos AddPromo(string name, int value, int universalId,
+        public Promos AddPromo(string name, int value,
             int ProductId, int BrandId, int Category, bool IsEnabled)
         {
-            Promos promo = ToEntity(name, value, universalId, ProductId, BrandId, Category, IsEnabled);
+            Promos promo = ToEntity(name, value, ProductId, BrandId, Category, IsEnabled);
 
             if (name.Contains("brand"))//(promo.BrandId != 0)
             {
@@ -94,13 +94,12 @@ namespace internet_shop.Services
 
             return promo;
         }
-        public Promos ToEntity(string name, int value, int universalId, int productId, int brandId, int categoryId, bool isEnabled)
+        public Promos ToEntity(string name, int value, int productId, int brandId, int categoryId, bool isEnabled)
         {
             return new Promos
             {
                 Name = name,
                 Value = value,
-                UniversalId = universalId,
                 ProductId = productId,
                 BrandId = brandId,
                 CategoryId = categoryId,
@@ -120,7 +119,6 @@ namespace internet_shop.Services
             {
                 promos.Name = _promos.Name;
                 promos.Value = _promos.Value;
-                promos.UniversalId = _promos.UniversalId;
             }
 
             try
