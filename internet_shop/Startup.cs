@@ -1,9 +1,11 @@
 using System.Text;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 using internet_shop.Helpers;
 using internet_shop.Services;
 using internet_shop.DbContexts;
@@ -66,7 +68,6 @@ namespace internet_shop
             services.AddDbContext<ProductDbContext>();
             services.AddDbContext<ProfileDbContext>();
             services.AddDbContext<CategoryDbContext>();
-            services.AddDbContext<UsersDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
