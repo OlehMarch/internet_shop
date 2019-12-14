@@ -19,7 +19,7 @@ namespace internet_shop.Service
             this.appDBContent = dBContent;
         }
         
-        public void GetCart(IServiceProvider services)
+        public dynamic GetCart(IServiceProvider services)
         {
             ISession session = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
             string _cartId = session.GetString("cartId") ?? Guid.NewGuid().ToString();
@@ -34,17 +34,35 @@ namespace internet_shop.Service
                 cart.ProfileId = session.GetString("profileId");
                 appDBContent.Carts.Add(cart);
             }
-            appDBContent.SaveChanges();
+            try
+            {
+                appDBContent.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                return (null);
+            }
+            return cart;
         }
 
-        public void GetCart(string cartId, string profileId, string address)
+        public dynamic GetCart(string cartId, string profileId, string address)
         {
             Cart cart = new Cart() { CartId = cartId, ProfileId = profileId, Address = address };
             appDBContent.Carts.Add(cart);
-            appDBContent.SaveChanges();
+            try
+            {
+                appDBContent.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                return (null);
+            }
+            return cart;
         }
 
-        public void Add(int productId, string cartId) 
+        public bool Add(int productId, string cartId) 
         {
             //string _cartId = Guid.NewGuid().ToString();
             //if (appDBContent.Carts.SingleOrDefault(cart => cart.CartId == cartId) == null)
@@ -53,20 +71,48 @@ namespace internet_shop.Service
             //    appDBContent.SaveChanges();
             //}
             appDBContent.CartProducts.Add(new CartProduct(productId, cartId));
-            appDBContent.SaveChanges();
+            try
+            {
+                appDBContent.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                return (false);
+            }
+            return true;
         }
-        public void Remove(int productId, string cartId) {
+        public bool Remove(int productId, string cartId) {
             var p = appDBContent.CartProducts.FirstOrDefault(prod => prod.ProductId == productId && prod.CartId == cartId);
             appDBContent.CartProducts.Remove(p);
-            appDBContent.SaveChanges();
-        }
-        public void Clear(string cartId) {
-            while (appDBContent.CartProducts.SingleOrDefault(prod => prod.CartId == cartId) != null)
+            try
             {
-                var p = appDBContent.CartProducts.FirstOrDefault(prod => prod.CartId == cartId);
-                appDBContent.CartProducts.Remove(p);
                 appDBContent.SaveChanges();
+
             }
+            catch (Exception e)
+            {
+                return (false);
+            }
+            return true;
+        }
+        public bool Clear(string cartId) {
+            while (appDBContent.CartProducts.FirstOrDefault(prod => prod.CartId == cartId) != null)
+            {
+                var product = appDBContent.CartProducts.FirstOrDefault(prod => prod.CartId == cartId);
+                appDBContent.CartProducts.Remove(product);
+                try
+                {
+                    appDBContent.SaveChanges();
+
+                }
+                catch (Exception e)
+                {
+                    return (false);
+                }
+            }
+
+            return true;
         }
         public bool Pay(string cartId) {
             bool payStatus = false;
