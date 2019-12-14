@@ -4,12 +4,10 @@ using System.Text;
 using System.Security.Claims;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-
 using internet_shop.Models;
 using internet_shop.Helpers;
 using internet_shop.Entities;
@@ -21,45 +19,53 @@ namespace internet_shop.Services
     {
 
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        private readonly List<User> _users = new List<User>
-        {
-            new User {
-                Id = 1, Username = "test", Password = "test"
-            },
-            new User {
-                Id = 2, Username = "alshefer", Password = "alshefer"
-            },
-        };
+        //private readonly List<User> _users = new List<User>
+        //{
+        //    new User {
+        //        Id = 1, Username = "test", Password = "test"
+        //    },
+        //    new User {
+        //        Id = 2, Username = "alshefer", Password = "alshefer"
+        //    },
+        //};
 
         private readonly AppSettings _appSettings;
         private readonly ProfileDbContext _profileDbContext;
-        private DbSet<Profile> Profiles => _profileDbContext.Profiles;
-
+        private readonly UsersDbContext _userDbContext;
+        public UserService(IOptions<AppSettings> appSettings, ProfileDbContext profileDbContext, UsersDbContext usersDbContext)
+        {
+            _appSettings = appSettings.Value;
+            _profileDbContext = profileDbContext;
+            _userDbContext = usersDbContext;
+        }
+        private DbSet<Profile> _profiles => _profileDbContext.Profiles;
+        private DbSet<User> _users => _userDbContext.Users;
         public List<Profile> GetAllProfiles()
         {
-            return Profiles.ToList();
+            return _profiles.ToList();
         }
 
         public Profile GetProfileById(int id)
         {
-            var profile = Profiles.SingleOrDefault((Profile profile) => profile.Id == id);
+            var profile = _profiles.SingleOrDefault((Profile profile) => profile.Id == id);
             if (profile == null)
             {
                 return null;
             }
             return profile;
         }
-        public UserService(IOptions<AppSettings> appSettings, ProfileDbContext profileDbContext)
-        {
-            _appSettings = appSettings.Value;
-            _profileDbContext = profileDbContext;
-        }
-        private DbSet<Profile> _profiles => _profileDbContext.Profiles;
+
+
         public User Authenticate(string username, string password)
         {
-            
+            Profile profile = null;
             var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
-
+            if (user != null)
+            {
+                var data = _profiles.SingleOrDefault(x => x.Username == username);
+                if (data!=null)
+                    profile = ToEntity(data.FirstName, data.LastName, data.Email, data.Address, data.Username, data.Password);
+            }
             // return null if user not found
             if (user == null)
                 return null;
@@ -83,7 +89,7 @@ namespace internet_shop.Services
         }
         public Profile AddUser(string fn, string ln, string em, string addr, string username, string password)
         {
-            var data = _users.SingleOrDefault(x => x.Username == username);
+            var data = _profiles.SingleOrDefault(x => x.Username == username);
             Profile newdata = null;
             if (data != null)
                 return null;
@@ -93,6 +99,16 @@ namespace internet_shop.Services
             try
             {
                 _profileDbContext.SaveChanges();
+            }
+            catch
+            {
+                return null;
+            }
+            User newuser = ToEntityUser(username, password);
+            _users.Add(newuser);
+            try
+            {
+                _userDbContext.SaveChanges();
             }
             catch
             {
@@ -113,7 +129,15 @@ namespace internet_shop.Services
                 Password = password,
             };
         }
-
+        public User ToEntityUser(string username, string password)
+        {
+            return new User
+            {
+                Username = username,
+                Password = password,
+                Token = null,
+            };
+        }
         public IEnumerable<User> GetAll()
         {
             return _users.WithoutPasswords();
@@ -121,14 +145,14 @@ namespace internet_shop.Services
 
         public (bool result, Exception exception) DeleteProfileById(int id)
         {
-            var profile = Profiles.SingleOrDefault((Profile profile) => profile.Id == id);
+            var profile = _profiles.SingleOrDefault((Profile profile) => profile.Id == id);
 
             if (profile == null)
             {
                 return (false, new ArgumentNullException($"Promo with id: {id} not found"));
             }
 
-            EntityEntry<Profile> result = Profiles.Remove(profile);
+            EntityEntry<Profile> result = _profiles.Remove(profile);
 
             try
             {
@@ -144,7 +168,7 @@ namespace internet_shop.Services
 
         public (Profile profile, Exception exception) Updateprofile(Profile _profile)
         {
-            Profile profile = Profiles.SingleOrDefault((Profile profile) => profile.Id == _profile.Id);
+            Profile profile = _profiles.SingleOrDefault((Profile profile) => profile.Id == _profile.Id);
 
             if (profile == null)
             {

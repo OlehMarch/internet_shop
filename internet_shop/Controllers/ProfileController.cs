@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-
 using Microsoft.AspNetCore.Mvc;
-
 using internet_shop.Models;
 using internet_shop.Services;
 
@@ -24,6 +22,7 @@ namespace internet_shop.Controllers
             return _userService.GetAllProfiles();
         }
 
+
         [HttpGet("{id}")]
 
         public IActionResult Get(int id)
@@ -43,7 +42,7 @@ namespace internet_shop.Controllers
         {
             var data = _userService.AddUser(value.FirstName, value.LastName, value.Email, value.Address, value.Username, value.Password);
             if (data == null)
-                return BadRequest(new { message = "Username is used" });
+                return BadRequest(new { message = "Username is created" });
 
             return Ok(data);
         }
