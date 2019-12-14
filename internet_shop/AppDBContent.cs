@@ -15,7 +15,7 @@ namespace internet_shop
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string dbName = "newcart";
+            string dbName = "internet_shop";
             string dbUser = "root";
             string dbHost = "localhost";
 
