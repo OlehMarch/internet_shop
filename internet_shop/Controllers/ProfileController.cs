@@ -43,7 +43,7 @@ namespace internet_shop.Controllers
         {
             var data = _userService.AddUser(value.FirstName, value.LastName, value.Email, value.Address, value.Username, value.Password);
             if (data == null)
-                return BadRequest(new { message = "Username is used" });
+                return BadRequest(new { message = "Username is created" });
 
             return Ok(data);
         }
