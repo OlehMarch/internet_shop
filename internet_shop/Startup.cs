@@ -68,6 +68,7 @@ namespace internet_shop
             services.AddDbContext<ProductDbContext>();
             services.AddDbContext<ProfileDbContext>();
             services.AddDbContext<CategoryDbContext>();
+            services.AddDbContext<UsersDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
