@@ -118,7 +118,7 @@ namespace internet_shop.Service
             bool payStatus = false;
             Cart cart = appDBContent.Carts.SingleOrDefault(cart => cart.CartId == cartId);
             List<CartProduct> products = appDBContent.CartProducts.Where(product => product.CartId == cartId).ToList();
-            if (cart != null && products == null)
+            if (cart != null && products != null)
             {
                 payStatus = true;
             }
