@@ -11,12 +11,12 @@ namespace internet_shop.Services
 {
     public class BrandService
     {
+        private readonly BaseDbContext _db;
         public BrandService(BaseDbContext db)
         {
             _db = db;
         }
 
-        private readonly BaseDbContext _db;
         private DbSet<Brand> Brand => _db.Brands;
 
         public List<Brand> GetAllBrand()
@@ -76,6 +76,30 @@ namespace internet_shop.Services
             {
                 Name = name,
             };
+        }
+
+        public (Brand brand, Exception exception) UpdateBrand(Brand _brand)
+        {
+            Brand brand = this.Brand.SingleOrDefault((Brand brand) => brand.Id == _brand.Id);
+            if (brand == null)
+            {
+                return (null, new ArgumentException($"brand with id:{_brand.Id}not found"));
+
+            }
+            if (_brand.Id != 0)
+            {
+                brand.Name = _brand.Name;
+            }
+
+            try
+            {
+                _db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                return (null, new DbUpdateException($"Cannot save changes: {e.Message}"));
+            }
+            return (_brand, null);
         }
     }
 }
