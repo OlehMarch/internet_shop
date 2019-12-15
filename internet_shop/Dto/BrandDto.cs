@@ -9,6 +9,6 @@ namespace internet_shop.Dto
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int PromosdId { get; set; }
+        public int PromosId { get; set; }
     }
 }
