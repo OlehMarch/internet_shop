@@ -1,93 +1,80 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
-
 using internet_shop.Models;
 using Microsoft.EntityFrameworkCore;
+using internet_shop.Dto;
 
 namespace internet_shop.Services
 {
     public class ProductService
     {
-        public ProductService(BaseDbContext db)
+        public ProductService(BaseDbContext db, BrandService brandService, PromosService promosService, CategoriesService categoriesService)
         {
             _db = db;
+            _brandService = brandService;
+            _categoriesService = categoriesService;
+            _promosService = promosService;
         }
-
+        private readonly PromosService _promosService;
+        private readonly BrandService _brandService;
+        private readonly CategoriesService _categoriesService;
         private readonly BaseDbContext _db;
         private DbSet<Product> Products => _db.Products;
+        private DbSet<Brand> Brands => _db.Brands;
+        private DbSet<Categories> Categories => _db.Categories;
+        private DbSet<Promos> Promos => _db.Promos;
 
-        public bool AddNewProduct(string name, string description, int brandId, int categoryId, int price, int updatedPrice)
+        public ProductDTO AddNewProduct(string name, string description, int brandId, int categoryId, int price)
         {
-            var product = ToEntity(name, description, brandId, categoryId, price, updatedPrice);
-            if (product == null)
-                return false;
-            else
-            {
-                Products.Add(product);
-                _db.SaveChanges();
-                product = ProductToDTO(product);
-                Products.Update(product);
-                _db.SaveChanges();
-                return true;
-            }
+            var product = ToEntity(name, description, brandId, categoryId, price);
+            if (product == null) return null;
+
+            Products.Add(product);
+
+            try { _db.SaveChanges(); }
+            catch { return null; }
+
+            return ToDTO(product);
         }
-        public List<Product> GetAll()
+        public List<ProductDTO> GetAll()
         {
-            return Products.ToList();
+            List<ProductDTO> product = new List<ProductDTO>(); 
+            var productList = Products.ToList();
+            for (int i = 0; i < productList.Count; i++) { product.Add(ToDTO(productList[i])); }
+
+            if (product.Count == 0) return null;
+            return product;
         }
 
-        public bool UpdateProduct()
+        public ProductDTO UpdateProduct(int id, string name, string description, int brandId, int categoryId, int price)
         {
-            var products = Products.ToList();
-            for (int i = 0; i < products.Count; i++)
-            {
-                products[i] = ProductToDTO(products[i]);
-                Products.Update(products[i]);
-            }
-            try
-            {
-                _db.SaveChanges();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            var product = Products.Find(id);
+            product = ToEntity(name, description, brandId, categoryId, price);
+            _db.Update(product);
+            if (product == null) return null;
+            return ToDTO(product);
         }
 
         public bool Remove(int id)
         {
-            using (BaseDbContext db = new BaseDbContext()) // TODO(friday13): change to DI usage
+            var products = Products.Find(id);
+            if (products == null)
+                return false;
+            else
             {
-                var products = db.Products.Find(id);
-                if (products == null)
-                    return false;
-                else
-                {
-                    db.Products.Remove(products);
-                    db.SaveChanges();
-                    return true;
-                }
-
+                Products.Remove(products);
+                _db.SaveChanges();
+                return true;
             }
         }
 
-        public Product GetProduct(int id)
+        public ProductDTO GetProductById(int id)
         {
-            using (BaseDbContext db = new BaseDbContext()) // TODO(friday13): change to DI usage
-            {
-                if (db.Products.Find(id) == null)
-                {
-                    return null;
-                }
-                else
-                {
-                    return db.Products.Find(id);
-                }
-            }
+            if (Products.Find(id) == null) return null;
+                else return ToDTO(Products.Find(id));
         }
 
-        public Product ToEntity(string name, string description, int brandId, int categoryId, int price, int updatedPrice)
+        public Product ToEntity(string name, string description, int brandId, int categoryId, int price)
         {
             return new Product
             {
@@ -95,30 +82,37 @@ namespace internet_shop.Services
                 Description = description,
                 BrandId = brandId,
                 CategoryId = categoryId,
-                Price = price,
-                UpdatedPrice = updatedPrice,
+                Price = price
             };
         }
 
-        public Product ProductToDTO(Product product)
+        public ProductDTO ToDTO(Product product)
         {
-            var newPrice = EntryPromos(product.Id);
-            product.UpdatedPrice = product.Price - ((product.Price * newPrice) / 100);
-            return product;
+            var persent = EntryPromos(product.Id).Item1;
+            if (product == null) return null;
+
+            return new ProductDTO
+            {
+                Id = product.Id,
+                brandDto = _brandService.ToBrandDto(Brands.Find(product.BrandId)),
+                categoriesDto = _categoriesService.ToDTO(Categories.Find(product.CategoryId)),
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                UpdatedPrice = product.Price - (persent * (product.Price / 100)),
+                PromosDto = EntryPromos(product.Id).Item2
+            };
         }
 
-        public int EntryPromos(int id)
+        public (int, PromosDTO) EntryPromos(int id)
         {
             var product = Products.SingleOrDefault((Product product) => product.Id == id);
-            //List<Promos> promos = new List<Promos>();
             var promos = _db.Promos.Where((x) => x.IsEnabled == true).ToList();
-
-            //var promos =(_db.Promos.GroupBy((x)=> x.IsEnabled == true).ToList());
 
             return ForToPromos(promos, product);
         }
 
-        public int ForToPromos(List<Promos> promos, Product product)
+        public (int, PromosDTO) ForToPromos(List<Promos> promos, Product product)
         {
             List<Promos> promoList = new List<Promos>();
             for (int item = 0; item < promos.Count; item++)
@@ -132,12 +126,13 @@ namespace internet_shop.Services
             }
             if (promoList.Count == 0)
             {
-                return 0;
+                return (0,null);
             }
             else
             {
+                var promosObj = promoList.Max(x => x);
                 int promo = promoList.Max(x => x.Value);
-                return promo;
+                return (promo,_promosService.ToDTO(promosObj));
             }
         }
     }

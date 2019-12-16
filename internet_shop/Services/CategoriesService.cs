@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 using internet_shop.Models;
+using internet_shop.Dto;
 
 namespace internet_shop.Services
 {
@@ -17,19 +18,25 @@ namespace internet_shop.Services
         private readonly BaseDbContext _db;
         private DbSet<Categories> Categories => _db.Categories;
 
-        public List<Categories> GetAllCategory()
+        public List<CategoriesDTO> GetAllCategory()
         {
-            return Categories.ToList();
+            List<CategoriesDTO> categoriesList = new List<CategoriesDTO>(); 
+            var categories = Categories.ToList();
+            for (int i = 0; i < categories.Count; i++)
+            {
+                categoriesList.Add(ToDTO(categories[i]));
+            }
+            
+            if (categoriesList.Count != 0) return categoriesList;
+            else return null;
         }
 
-        public Categories GetCategoryById(int id)
+        public CategoriesDTO GetCategoryById(int id)
         {
-            var cat = Categories.SingleOrDefault((Categories cat) => cat.Id == id);
-            if (cat == null)
-            {
-                return null;
-            }
-            return cat;
+            var categories = Categories.SingleOrDefault((Categories categories) => categories.Id == id);
+            
+            if (categories == null) return null;
+            else return ToDTO(categories);
         }
         public bool DeleteCategoryById(int id)
         {
@@ -44,26 +51,20 @@ namespace internet_shop.Services
                 _db.SaveChanges();
             }
             catch
-            {
+            {   
                 return false;
             }
 
             return true;
         }
-        public bool AddCategories(string name)
+        public CategoriesDTO AddCategories(string name)
         {
-            Categories cat = ToEntity(name);
-            Categories.Add(cat);
-            try
-            {
-                _db.SaveChanges();
-            }
-            catch
-            {
-                return false;
-            }
+            Categories categories = ToEntity(name);
+            Categories.Add(categories);
 
-            return true;
+            try { _db.SaveChanges(); 
+                return ToDTO(categories); }
+            catch { return ToDTO(categories); }
         }
         public Categories ToEntity(string name)
         {
@@ -71,6 +72,29 @@ namespace internet_shop.Services
             {
                 Name = name,
             };
+        }
+
+        public CategoriesDTO ToDTO(Categories categories)
+        {
+            if (categories != null)
+                return new CategoriesDTO
+                {
+                    Id = categories.Id,
+                    Name = categories.Name,
+                    Value = CalculateProductCount(categories)
+                };
+            else return null;
+        }
+
+        public int CalculateProductCount(Categories categories)
+        {
+            int count = 0;
+            var product = _db.Products.ToList();
+            for (int i = 0; i < product.Count; i++)
+            {
+                if (product[i].CategoryId == categories.Id) count++;
+            }
+            return count;
         }
     }
 }

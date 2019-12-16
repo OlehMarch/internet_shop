@@ -20,7 +20,11 @@ namespace internet_shop.Controllers
         }
         // GET: api/Brand
         [HttpGet]
+<<<<<<< Updated upstream
         public IEnumerable<BrandDto> Get()
+=======
+        public IEnumerable<BrandDTO> Get()
+>>>>>>> Stashed changes
         {
             return _brandService.GetAllBrand();
         }
@@ -30,8 +34,13 @@ namespace internet_shop.Controllers
 
         public IActionResult Get(int id)
         {
+<<<<<<< Updated upstream
             BrandDto brandDto = _brandService.GetBrandById(id);
             if (brandDto == null)
+=======
+            var brand = _brandService.GetBrandById(id);
+            if (brand == null)
+>>>>>>> Stashed changes
             {
                 return NotFound($"Unfortunately no brand found with id: {id}");
             }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace internet_shop.Dto
 {
-    public class BrandDto
+    public class BrandDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
