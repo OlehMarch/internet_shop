@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 
 using internet_shop.Models;
 using internet_shop.Services;
@@ -11,7 +9,7 @@ namespace internet_shop.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class BrandController : Controller
+    public class BrandController : ControllerBase
     {
         private readonly BrandService _brandService;
 
@@ -42,7 +40,7 @@ namespace internet_shop.Controllers
             }
         }
 
-        // POST: Brand/Create
+        // POST: api/Brand
         [HttpPost]
         public IActionResult Post([FromBody] Brand value)
         {
@@ -58,25 +56,33 @@ namespace internet_shop.Controllers
             }
         }
 
-        // GET: Brand/Delete/5
-        public ActionResult Delete(int id)
+        // PUT: api/Brand/5
+        [HttpPut]
+        public IActionResult Put([FromBody] Brand value)
         {
-            return View();
+            var data = _brandService.UpdateBrand(value);
+            if (data.brand == null)
+            {
+                return BadRequest(data.exception.Message);
+            }
+            else
+            {
+                return Ok(data);
+            }
         }
 
-        // POST: Brand/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        // DELETE: api/ApiWithActions/5
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
-            try
+            var data = _brandService.DeleteBrandById(id);
+            if (data.exception != null)
             {
-                // TODO: Add delete logic here
-                return RedirectToAction(nameof(Index));
+                return BadRequest(data.exception.Message);
             }
-            catch
+            else
             {
-                return View();
+                return Ok(data.result);
             }
         }
     }
