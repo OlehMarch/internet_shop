@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 using internet_shop.Models;
+using internet_shop.Dto;
 
 namespace internet_shop.Services
 {
@@ -17,32 +18,56 @@ namespace internet_shop.Services
             _db = db;
         }
 
-        private DbSet<Brand> Brand => _db.Brands;
+        private DbSet<Brand> _brand => _db.Brands;
 
-        public List<Brand> GetAllBrand()
+        public static BrandDto ToBrandDto(Brand brand)
         {
-            return Brand.ToList();
-        }
-
-        public Brand GetBrandById(int id)
-        {
-            var brand = Brand.SingleOrDefault((Brand brand) => brand.Id == id);
             if (brand == null)
             {
                 return null;
             }
-            return brand;
+            return new BrandDto
+            {
+                Id = brand.Id,
+                Name = brand.Name,
+                Value = brand.Value
+            };
+        }
+
+        public List<BrandDto> GetAllBrand()
+        {
+            List<BrandDto> list = new List<BrandDto>();
+            var brandList = _brand.ToList();
+            for (int i = 0; i < brandList.Count; i++)
+            {
+                list.Add(ToBrandDto(brandList[i]));
+            }
+            return list;
+        }
+
+        public BrandDto GetBrandById(int id)
+        {
+            var brand = _brand.SingleOrDefault((Brand brand) => brand.Id == id);
+            if (brand == null)
+            {
+                return null;
+            }
+            else 
+            {
+                var brand1 = ToBrandDto(brand);
+                return brand1;
+            }
         }
         public (bool result, Exception exception) DeleteBrandById(int id)
         {
-            Brand brand = Brand.SingleOrDefault((Brand brand) => brand.Id == id);
+            Brand brand = _brand.SingleOrDefault((Brand brand) => brand.Id == id);
 
             if (brand == null)
             {
                 return (false, new ArgumentNullException($"Brand with specific id: {id} not found"));
             }
 
-            EntityEntry<Brand> result = Brand.Remove(brand);
+            EntityEntry<Brand> result = _brand.Remove(brand);
 
             try
             {
@@ -55,10 +80,10 @@ namespace internet_shop.Services
 
             return (result.State == EntityState.Deleted, null);
         }
-        public Brand AddBrand(string name)
+        public BrandDto AddBrand(string name, int value)
         {
-            Brand brand = ToEntity(name);
-            Brand.Add(brand);
+            Brand brand = ToEntity(name, value);
+            _brand.Add(brand);
             try
             {
                 _db.SaveChanges();
@@ -68,19 +93,19 @@ namespace internet_shop.Services
                 return null;
             }
 
-            return brand;
+            return ToBrandDto(brand);
         }
-        public Brand ToEntity(string name)
+        public Brand ToEntity(string name, int value)
         {
             return new Brand
             {
-                Name = name,
+                Name = name, Value = value
             };
         }
 
-        public (Brand brand, Exception exception) UpdateBrand(Brand _brand)
+        public (BrandDto brandDto, Exception exception) UpdateBrand(Brand _brand)
         {
-            Brand brand = this.Brand.SingleOrDefault((Brand brand) => brand.Id == _brand.Id);
+            Brand brand = this._brand.SingleOrDefault((Brand brand) => brand.Id == _brand.Id);
             if (brand == null)
             {
                 return (null, new ArgumentException($"brand with id:{_brand.Id}not found"));
@@ -89,6 +114,7 @@ namespace internet_shop.Services
             if (_brand.Id != 0)
             {
                 brand.Name = _brand.Name;
+                brand.Value = _brand.Value;
             }
 
             try
@@ -99,7 +125,7 @@ namespace internet_shop.Services
             {
                 return (null, new DbUpdateException($"Cannot save changes: {e.Message}"));
             }
-            return (_brand, null);
+            return (ToBrandDto(_brand), null);
         }
     }
 }

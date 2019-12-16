@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using internet_shop.Models;
 using internet_shop.Services;
+using internet_shop.Dto;
 
 namespace internet_shop.Controllers
 {
@@ -19,24 +20,24 @@ namespace internet_shop.Controllers
         }
         // GET: api/Brand
         [HttpGet]
-        public IEnumerable<Brand> Get()
+        public IEnumerable<BrandDto> Get()
         {
             return _brandService.GetAllBrand();
         }
 
         // GET: api/Brand/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "Get")]
 
         public IActionResult Get(int id)
         {
-            Brand brand = _brandService.GetBrandById(id);
-            if (brand == null)
+            BrandDto brandDto = _brandService.GetBrandById(id);
+            if (brandDto == null)
             {
                 return NotFound($"Unfortunately no brand found with id: {id}");
             }
             else
             {
-                return Ok(brand);
+                return Ok(brandDto);
             }
         }
 
@@ -44,9 +45,9 @@ namespace internet_shop.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Brand value)
         {
-            var data = _brandService.AddBrand(value.Name);
+            BrandDto brand = _brandService.AddBrand(value.Name, value.Value);
 
-            if (data == null)
+            if (brand == null)
             {
                 return BadRequest();
             }
@@ -61,7 +62,7 @@ namespace internet_shop.Controllers
         public IActionResult Put([FromBody] Brand value)
         {
             var data = _brandService.UpdateBrand(value);
-            if (data.brand == null)
+            if (data.brandDto == null)
             {
                 return BadRequest(data.exception.Message);
             }
