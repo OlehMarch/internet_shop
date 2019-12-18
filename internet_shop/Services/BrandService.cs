@@ -5,50 +5,21 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-using internet_shop.Models;
 using internet_shop.Dto;
+using internet_shop.Models;
 
 namespace internet_shop.Services
 {
     public class BrandService
     {
-        private readonly BaseDbContext _db;
         public BrandService(BaseDbContext db)
         {
             _db = db;
         }
 
-        private DbSet<Brand> _brand => _db.Brands;
+        private readonly BaseDbContext _db;
+        private DbSet<Brand> Brand => _db.Brands;
 
-<<<<<<< Updated upstream
-        public static BrandDto ToBrandDto(Brand brand)
-        {
-            if (brand == null)
-            {
-                return null;
-            }
-            return new BrandDto
-            {
-                Id = brand.Id,
-                Name = brand.Name,
-                Value = brand.Value
-            };
-        }
-
-        public List<BrandDto> GetAllBrand()
-        {
-            List<BrandDto> list = new List<BrandDto>();
-            var brandList = _brand.ToList();
-            for (int i = 0; i < brandList.Count; i++)
-            {
-                list.Add(ToBrandDto(brandList[i]));
-            }
-            return list;
-        }
-
-        public BrandDto GetBrandById(int id)
-        {
-=======
         public BrandDTO ToBrandDto(Brand brand)
         {
             if (brand == null) return null;
@@ -60,6 +31,7 @@ namespace internet_shop.Services
                 Value = CalculateProductCount(brand)
             };
         }
+
         public int CalculateProductCount(Brand brand)
         {
             int count = 0;
@@ -74,7 +46,7 @@ namespace internet_shop.Services
         public List<BrandDTO> GetAllBrand()
         {
             List<BrandDTO> list = new List<BrandDTO>();
-            var brandList = _brand.ToList();
+            var brandList = Brand.ToList();
             for (int i = 0; i < brandList.Count; i++)
             {
                 list.Add(ToBrandDto(brandList[i]));
@@ -84,32 +56,26 @@ namespace internet_shop.Services
 
         public BrandDTO GetBrandById(int id)
         {
->>>>>>> Stashed changes
-            var brand = _brand.SingleOrDefault((Brand brand) => brand.Id == id);
+            var brand = Brand.SingleOrDefault((Brand brand) => brand.Id == id);
             if (brand == null)
             {
                 return null;
             }
-<<<<<<< Updated upstream
-            else 
-=======
-            else
->>>>>>> Stashed changes
-            {
-                var brand1 = ToBrandDto(brand);
-                return brand1;
-            }
+
+            var brandDto = ToBrandDto(brand);
+            return brandDto;
         }
+
         public (bool result, Exception exception) DeleteBrandById(int id)
         {
-            Brand brand = _brand.SingleOrDefault((Brand brand) => brand.Id == id);
+            Brand brand = Brand.SingleOrDefault((Brand brand) => brand.Id == id);
 
             if (brand == null)
             {
                 return (false, new ArgumentNullException($"Brand with specific id: {id} not found"));
             }
 
-            EntityEntry<Brand> result = _brand.Remove(brand);
+            EntityEntry<Brand> result = Brand.Remove(brand);
 
             try
             {
@@ -122,16 +88,11 @@ namespace internet_shop.Services
 
             return (result.State == EntityState.Deleted, null);
         }
-<<<<<<< Updated upstream
-        public BrandDto AddBrand(string name, int value)
-        {
-            Brand brand = ToEntity(name, value);
-=======
+
         public BrandDTO AddBrand(string name)
         {
             Brand brand = ToEntity(name);
->>>>>>> Stashed changes
-            _brand.Add(brand);
+            Brand.Add(brand);
             try
             {
                 _db.SaveChanges();
@@ -143,39 +104,24 @@ namespace internet_shop.Services
 
             return ToBrandDto(brand);
         }
-        public Brand ToEntity(string name, int value)
+
+        public Brand ToEntity(string name)
         {
             return new Brand
             {
-<<<<<<< Updated upstream
-                Name = name, Value = value
-            };
-        }
-
-        public (BrandDto brandDto, Exception exception) UpdateBrand(Brand _brand)
-=======
                 Name = name
             };
         }
 
         public (BrandDTO brandDto, Exception exception) UpdateBrand(Brand _brand)
->>>>>>> Stashed changes
         {
-            Brand brand = this._brand.SingleOrDefault((Brand brand) => brand.Id == _brand.Id);
+            Brand brand = this.Brand.SingleOrDefault((Brand brand) => brand.Id == _brand.Id);
             if (brand == null)
             {
                 return (null, new ArgumentException($"brand with id:{_brand.Id}not found"));
 
             }
-<<<<<<< Updated upstream
-            if (_brand.Id != 0)
-            {
-                brand.Name = _brand.Name;
-                brand.Value = _brand.Value;
-            }
-=======
             if (_brand.Id != 0) brand.Name = _brand.Name;
->>>>>>> Stashed changes
 
             try
             {

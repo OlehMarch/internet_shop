@@ -15,6 +15,7 @@ namespace internet_shop.Services
             _categoriesService = categoriesService;
             _promosService = promosService;
         }
+
         private readonly PromosService _promosService;
         private readonly BrandService _brandService;
         private readonly CategoriesService _categoriesService;
@@ -48,7 +49,7 @@ namespace internet_shop.Services
 
         public ProductDTO UpdateProduct(int id, string name, string description, int brandId, int categoryId, int price)
         {
-            var product = Products.Find(id);
+            var product = Products.Find(id); // TODO(friday13): for what?
             product = ToEntity(name, description, brandId, categoryId, price);
             _db.Update(product);
             if (product == null) return null;

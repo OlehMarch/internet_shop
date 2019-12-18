@@ -39,7 +39,10 @@ namespace internet_shop.Controllers
         [HttpGet("/filter")]
         public IEnumerable<Product> Filter([FromQuery] List<int> brandIds, [FromQuery] List<int> categoryIds)
         {
-            return _productService.Filter(brandIds, categoryIds);
+            // TODO(friday13): where Filter method of ProductService?
+
+            //return _productService.Filter(brandIds, categoryIds);
+            return new Product[0];
         }
 
         [HttpDelete("{id}")]
