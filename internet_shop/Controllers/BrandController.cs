@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 
+using internet_shop.Dto;
 using internet_shop.Models;
 using internet_shop.Services;
 
@@ -11,15 +12,16 @@ namespace internet_shop.Controllers
     [ApiController]
     public class BrandController : ControllerBase
     {
-        private readonly BrandService _brandService;
-
         public BrandController(BrandService brandService)
         {
             _brandService = brandService;
         }
+
+        private readonly BrandService _brandService;
+        
         // GET: api/Brand
         [HttpGet]
-        public IEnumerable<Brand> Get()
+        public IEnumerable<BrandDTO> Get()
         {
             return _brandService.GetAllBrand();
         }
@@ -29,7 +31,7 @@ namespace internet_shop.Controllers
 
         public IActionResult Get(int id)
         {
-            Brand brand = _brandService.GetBrandById(id);
+            var brand = _brandService.GetBrandById(id);
             if (brand == null)
             {
                 return NotFound($"Unfortunately no brand found with id: {id}");
@@ -42,11 +44,11 @@ namespace internet_shop.Controllers
 
         // POST: api/Brand
         [HttpPost]
-        public IActionResult Post([FromBody] Brand value)
+        public IActionResult Post([FromBody] BrandDTO value)
         {
-            var data = _brandService.AddBrand(value.Name);
+            BrandDTO brand = _brandService.AddBrand(value.Name);
 
-            if (data == null)
+            if (brand == null)
             {
                 return BadRequest();
             }
@@ -61,7 +63,7 @@ namespace internet_shop.Controllers
         public IActionResult Put([FromBody] Brand value)
         {
             var data = _brandService.UpdateBrand(value);
-            if (data.brand == null)
+            if (data.brandDto == null)
             {
                 return BadRequest(data.exception.Message);
             }

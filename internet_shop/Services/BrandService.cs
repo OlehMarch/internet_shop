@@ -5,34 +5,67 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
+using internet_shop.Dto;
 using internet_shop.Models;
 
 namespace internet_shop.Services
 {
     public class BrandService
     {
-        private readonly BaseDbContext _db;
         public BrandService(BaseDbContext db)
         {
             _db = db;
         }
 
+        private readonly BaseDbContext _db;
         private DbSet<Brand> Brand => _db.Brands;
 
-        public List<Brand> GetAllBrand()
+        public BrandDTO ToBrandDto(Brand brand)
         {
-            return Brand.ToList();
+            if (brand == null) return null;
+
+            return new BrandDTO
+            {
+                Id = brand.Id,
+                Name = brand.Name,
+                Value = CalculateProductCount(brand)
+            };
         }
 
-        public Brand GetBrandById(int id)
+        public int CalculateProductCount(Brand brand)
+        {
+            int count = 0;
+            var product = _db.Products.ToList();
+            for (int i = 0; i < product.Count; i++)
+            {
+                if (product[i].BrandId == brand.Id) count++;
+            }
+            return count;
+        }
+
+        public List<BrandDTO> GetAllBrand()
+        {
+            List<BrandDTO> list = new List<BrandDTO>();
+            var brandList = Brand.ToList();
+            for (int i = 0; i < brandList.Count; i++)
+            {
+                list.Add(ToBrandDto(brandList[i]));
+            }
+            return list;
+        }
+
+        public BrandDTO GetBrandById(int id)
         {
             var brand = Brand.SingleOrDefault((Brand brand) => brand.Id == id);
             if (brand == null)
             {
                 return null;
             }
-            return brand;
+
+            var brandDto = ToBrandDto(brand);
+            return brandDto;
         }
+
         public (bool result, Exception exception) DeleteBrandById(int id)
         {
             Brand brand = Brand.SingleOrDefault((Brand brand) => brand.Id == id);
@@ -55,7 +88,8 @@ namespace internet_shop.Services
 
             return (result.State == EntityState.Deleted, null);
         }
-        public Brand AddBrand(string name)
+
+        public BrandDTO AddBrand(string name)
         {
             Brand brand = ToEntity(name);
             Brand.Add(brand);
@@ -68,17 +102,18 @@ namespace internet_shop.Services
                 return null;
             }
 
-            return brand;
+            return ToBrandDto(brand);
         }
+
         public Brand ToEntity(string name)
         {
             return new Brand
             {
-                Name = name,
+                Name = name
             };
         }
 
-        public (Brand brand, Exception exception) UpdateBrand(Brand _brand)
+        public (BrandDTO brandDto, Exception exception) UpdateBrand(Brand _brand)
         {
             Brand brand = this.Brand.SingleOrDefault((Brand brand) => brand.Id == _brand.Id);
             if (brand == null)
@@ -86,10 +121,7 @@ namespace internet_shop.Services
                 return (null, new ArgumentException($"brand with id:{_brand.Id}not found"));
 
             }
-            if (_brand.Id != 0)
-            {
-                brand.Name = _brand.Name;
-            }
+            if (_brand.Id != 0) brand.Name = _brand.Name;
 
             try
             {
@@ -99,7 +131,7 @@ namespace internet_shop.Services
             {
                 return (null, new DbUpdateException($"Cannot save changes: {e.Message}"));
             }
-            return (_brand, null);
+            return (ToBrandDto(_brand), null);
         }
     }
 }

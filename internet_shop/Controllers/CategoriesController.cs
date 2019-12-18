@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using internet_shop.Models;
 using internet_shop.Services;
+using internet_shop.Dto;
 
 namespace internet_shop.Controllers
 {
@@ -20,7 +21,7 @@ namespace internet_shop.Controllers
 
         // GET: api/Cat
         [HttpGet]
-        public List<Categories> Get()
+        public List<CategoriesDTO> Get()
         {
             return _catService.GetAllCategory();
             
@@ -28,7 +29,7 @@ namespace internet_shop.Controllers
 
         // GET: api/Cat/5
         [HttpGet("{id}")]
-        public Categories Get(int id)
+        public CategoriesDTO Get(int id)
         {
             var cat = _catService.GetCategoryById(id);
             return cat;
@@ -36,10 +37,10 @@ namespace internet_shop.Controllers
 
         // POST: api/Cat
         [HttpPost]
-        public IActionResult AddNewCategory([FromBody] Categories categories)
+        public IActionResult AddNewCategory([FromBody] CategoriesDTO categories)
         {
             var category = _catService.AddCategories(categories.Name);
-            if (category == false)
+            if (category == null)
                 return BadRequest("Bad request");
             else
                 return Ok("Code 200, new category is added");

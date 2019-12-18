@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 using internet_shop.Models;
+using internet_shop.Dto;
 
 namespace internet_shop.Services
 {
@@ -105,6 +106,19 @@ namespace internet_shop.Services
                 CategoryId = categoryId,
                 IsEnabled = isEnabled
             };
+        }
+
+        public PromosDTO ToDTO(Promos promos)
+        {
+            if (promos != null)
+                return new PromosDTO
+                {
+                    Id = promos.Id,
+                    Name = promos.Name,
+                    Value = promos.Value,
+                    IsEnabled = promos.IsEnabled
+                };
+            return null;
         }
         public (Promos promos, Exception exception) Updatepromos(Promos _promos)
         {
